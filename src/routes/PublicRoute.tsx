@@ -2,6 +2,8 @@ import type { RouteObject } from "react-router";
 import MainLayout from "../components/layouts/MainLayout";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/auth/login/LoginPage";
+import AuthLayout from "../components/layouts/AuthLayout";
+import ForgetpassPage from "../pages/auth/forgetpass/ForgetpassPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
 
 export const PublicRoute: RouteObject[] = [
@@ -13,6 +15,12 @@ export const PublicRoute: RouteObject[] = [
         path: "",
         element: <HomePage />,
       },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
       {
         path: "login",
         element: <LoginPage />,
@@ -20,6 +28,10 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "register",
         element: <RegisterPage />,
+      },
+      {
+        path: "forgetpass",
+        element: <ForgetpassPage />,
       },
     ],
   },
