@@ -2,7 +2,7 @@ const QuantitySection = () => {
   return (
     <div>
       <section className="bg-[#FFFBEF] py-16">
-        <div className="max-w-6xl mx-auto text-center px-6">
+        <div className="mx-6 xl:mx-auto max-w-7xl text-center">
           {/* <!-- Tiêu đề --> */}
           <h2 className="text-3xl md:text-4xl font-extrabold text-green-700 mb-2">
             CAM KẾT CHẤT LƯỢNG

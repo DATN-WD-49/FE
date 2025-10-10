@@ -1,3 +1,5 @@
+import { PhoneOutlined, PushpinOutlined } from "@ant-design/icons";
+
 const Footer = () => {
   return (
     <div>
@@ -6,7 +8,11 @@ const Footer = () => {
           <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-8 text-lg">
             {/* Cột 1 */}
             <div className="col-span-2 flex flex-col items-center space-y-6">
-              <img src="./pulic/logo.png" alt="Logo" className="w-32" />
+              <img
+                src="https://gotickets.events/wp-content/uploads/2022/12/logo-gotickets.png"
+                alt="Logo"
+                className="w-62 invert"
+              />
               <div className="flex space-x-6">
                 <a href="#" className="text-white hover:text-blue-500 text-3xl">
                   <i className="fa-brands fa-facebook"></i>
@@ -20,19 +26,25 @@ const Footer = () => {
             {/* <!-- Cột 2 --> */}
             <div className="col-span-3 space-y-4">
               <h2 className="font-bold text-2xl text-yellow-400">
-                CÔNG TY TNHH VĂN MINH
+                CÔNG TY TNHH GOTICKET
               </h2>
               <p>
-                <i className="fa-solid fa-location-dot text-yellow-400 mr-2"></i>
+                <span className="text-yellow-400 mr-2">
+                  <PushpinOutlined />
+                </span>
                 Khách sạn Thân Hoa, đường Mai Thúc Loan, phường Nghi Hương, TP.
                 Vinh, Nghệ An.
               </p>
               <p>
-                <i className="fa-solid fa-phone text-yellow-400 mr-2"></i>
-                0975767676
+                <span className="text-yellow-400 mr-2">
+                  <PhoneOutlined />
+                </span>
+                0365252737
               </p>
               <p>
-                <i className="fa-solid fa-phone-volume text-yellow-400 mr-2"></i>
+                <span className="text-yellow-400 mr-2">
+                  <PhoneOutlined />
+                </span>
                 1900 6467 - 1900 6762
               </p>
             </div>

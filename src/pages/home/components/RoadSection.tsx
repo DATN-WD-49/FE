@@ -3,7 +3,7 @@ const RoadSection = () => {
     <div>
       <div className="antialiased">
         <section className="bg-trong-dong py-16">
-          <div className="container mx-auto max-w-7xl px-4">
+          <div className="container mx-6 xl:mx-auto max-w-7xl ">
             {/* <!-- Tiêu đề --> */}
             <div className="text-center mb-12">
               <h2 className="text-green-800 text-4xl md:text-5xl font-extrabold mb-4">

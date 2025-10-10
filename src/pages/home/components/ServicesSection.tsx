@@ -3,7 +3,7 @@ const ServicesSection = () => {
     <div>
       <div className="antialiased">
         <section className="py-16">
-          <div className="container mx-auto max-w-7xl px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="container mx-6 xl:mx-auto max-w-7xl  grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* <!-- Bên trái: Tiêu đề --> */}
             <div className="text-left">
               <h2 className="text-green-800 font-extrabold text-3xl md:text-5xl leading-tight mb-4">

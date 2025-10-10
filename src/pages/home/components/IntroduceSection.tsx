@@ -2,7 +2,7 @@ const IntroduceSection = () => {
   return (
     <div className="antialiased bg-white text-gray-800">
       <section className="w-full bg-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="mx-6 xl:mx-auto max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* <!-- LEFT --> */}
             <div className="md:col-span-2 flex flex-col justify-center fade-in">
@@ -20,12 +20,18 @@ const IntroduceSection = () => {
 
               <div className="space-y-4 text-gray-700 mb-6">
                 <p>
-                  Là kim chỉ nam được Ban giám đốc xây dựng trong suốt quá trình
-                  hình thành và phát triển. Trải qua gần 17 năm hoạt động, với
-                  những bước tiến đầu tiên trên con đường xây dựng một công ty
-                  trẻ, năng động, không ngừng vươn lên hoạt động trên các lĩnh
-                  vực: vận tải hành khách, chuyển phát nhanh, bưu điện, xuất
-                  khẩu du học.
+                  Là kim chỉ nam được Ban Giám đốc GoTicket xây dựng và gìn giữ
+                  trong suốt quá trình hình thành và phát triển. Trải qua gần 17
+                  năm hoạt động, chúng tôi không ngừng đổi mới, sáng tạo và từng
+                  bước khẳng định vị thế của mình trong lĩnh vực vận tải hành
+                  khách – mang đến những hành trình an toàn, tiện nghi và đáng
+                  tin cậy cho mọi khách hàng. Với tinh thần dám nghĩ, dám làm và
+                  nỗ lực không ngừng nghỉ, GoTicket ngày càng khẳng định vị thế
+                  là thương hiệu vận tải uy tín hàng đầu tại Việt Nam, nơi mỗi
+                  chuyến xe không chỉ là phương tiện di chuyển, mà còn là hành
+                  trình của niềm tin, chất lượng và sự tận tâm. GoTicket – Khởi
+                  đầu vững chắc, đồng hành tin cậy, kiến tạo hành trình an toàn
+                  cho mọi người Việt.
                 </p>
 
                 <p>
