@@ -1,5 +1,87 @@
-const LoginPage = () => {
-  return <div>Login Page</div>;
-};
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { Checkbox } from "antd";
+import { useState } from "react";
+import { Link } from "react-router";
 
-export default LoginPage;
+export default function LoginPage() {
+  const [hiddenPass, setHiddenPass] = useState(true);
+  return (
+    <div className="flex items-center justify-end w-full ">
+      <div className="rounded-md p-8 bg-white w-[70%] shadow-xl">
+        <h2 className="text-cente font-medium text-2xl uppercase mb-4 text-green-700">
+          Đăng nhập
+        </h2>
+
+        <form className="flex flex-col space-y-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="">
+              <span className="text-red-500">*</span> Email
+            </label>
+            <input
+              type="email"
+              placeholder="Địa chỉ Email"
+              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="">
+              <span className="text-red-500">*</span> Mật khẩu
+            </label>
+            <div className="relative ">
+              <input
+                type={`${hiddenPass ? "password" : "text"}`}
+                placeholder="Mật khẩu"
+                className="border border-gray-300 w-full rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <button
+                type="button"
+                onClick={() => setHiddenPass(!hiddenPass)}
+                className="absolute right-3 top-[50%] translate-y-[-50%] cursor-pointer"
+              >
+                {hiddenPass ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Checkbox>Ghi nhớ đăng nhập</Checkbox>
+          </div>
+          <button
+            type="submit"
+            className="bg-green-600 text-white font-semibold py-2 cursor-pointer rounded hover:bg-green-700 transition"
+          >
+            Đăng nhập
+          </button>
+        </form>
+        <div>
+          <p className="text-gray-500 my-4 text-center">Hoặc</p>
+          <button className="hover:border-green-600 hover:text-green-600 flex items-center justify-center gap-3 border w-full py-2 rounded-md cursor-pointer">
+            <img
+              src="https://imagepng.org/wp-content/uploads/2019/08/google-icon.png"
+              className="w-6"
+              alt=""
+            />
+            Đăng nhập với Google
+          </button>
+        </div>
+
+        <div className="text-center mt-4 text-sm">
+          <p>
+            <span className="font-semibold">Bạn chưa có tài khoản?</span>{" "}
+            <Link
+              to="/auth/register"
+              className="text-green-600 font-semibold hover:underline"
+            >
+              Đăng ký
+            </Link>
+          </p>
+          <Link
+            to="/auth/forgetpass"
+            className="text-green-600 hover:underline mt-2 inline-block"
+          >
+            Quên mật khẩu?
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
