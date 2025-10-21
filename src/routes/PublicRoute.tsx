@@ -5,6 +5,7 @@ import LoginPage from "../pages/auth/login/LoginPage";
 import AuthLayout from "../components/layouts/AuthLayout";
 import ForgetpassPage from "../pages/auth/forgetpass/ForgetpassPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
+import BookingPage from "../pages/booking/BookingPage";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -14,6 +15,10 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "booking",
+        element: <BookingPage />,
       },
     ],
   },
@@ -32,6 +37,10 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "forgetpass",
         element: <ForgetpassPage />,
+      },
+      {
+        path: "booking",
+        element: <BookingPage />,
       },
     ],
   },
