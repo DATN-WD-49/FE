@@ -1,9 +1,7 @@
 import { Link } from "react-router";
-import { scrollToSection } from "../../../common/utils";
+import AuthHeader from "./AuthHeader";
 
 const Header = ({ isAuthPage = false }: { isAuthPage?: boolean }) => {
-  const handleBooking = () => scrollToSection("booking");
-
   return (
     <header className="bg-white">
       <div className="max-w-[1280px] mx-6  xl:mx-auto flex justify-between items-center">
@@ -16,22 +14,7 @@ const Header = ({ isAuthPage = false }: { isAuthPage?: boolean }) => {
             />
           </Link>
         </div>
-        {!isAuthPage && (
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleBooking}
-              className="bg-[#0c7d41] font-medium hover:opacity-85 duration-300 cursor-pointer py-3 px-6 uppercase rounded-full text-white"
-            >
-              Đặt vé ngay
-            </button>
-            <Link
-              className="bg-[#0c7d41]! font-medium hover:opacity-85 duration-300 py-3 px-6 uppercase rounded-full text-white!"
-              to={"/auth/login"}
-            >
-              Đăng nhập
-            </Link>
-          </div>
-        )}
+        {!isAuthPage && <AuthHeader />}
       </div>
     </header>
   );
