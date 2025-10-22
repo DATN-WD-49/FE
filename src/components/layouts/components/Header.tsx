@@ -25,7 +25,7 @@ const Header = ({ isAuthPage = false }: { isAuthPage?: boolean }) => {
               Đặt vé ngay
             </button>
             <Link
-              className="bg-[#0c7d41] font-medium hover:opacity-85 duration-300 py-3 px-6 uppercase rounded-full text-white"
+              className="bg-[#0c7d41]! font-medium hover:opacity-85 duration-300 py-3 px-6 uppercase rounded-full text-white!"
               to={"/auth/login"}
             >
               Đăng nhập
