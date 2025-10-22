@@ -5,8 +5,8 @@ import {
 } from "@ant-design/icons";
 import { Button } from "antd";
 import { useState } from "react";
-import ViaCitiesModal from "../../../pages/booking/components/ViaCitiesModal";
 import SeatPickSection from "./SeatPickSection";
+import ViaCitiesModal from "./ViaCitiesModal";
 
 const ScheduleCard = () => {
   const [isOpenSeatMap, setOpenSeatMap] = useState(false);
