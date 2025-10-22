@@ -3,7 +3,7 @@ import { Spin } from "antd";
 import { Navigate, useNavigate, useParams } from "react-router";
 import { useAuthStore } from "../../../common/store";
 import { useQuery } from "@tanstack/react-query";
-import { QUERY_KEY } from "../../../common/constants/queryKey";
+import { QUERY_KEY } from "../../../common/contants/queryKey";
 import { getProfile } from "../../../common/services/user.service";
 
 const LoginGooglePage = () => {
@@ -14,7 +14,7 @@ const LoginGooglePage = () => {
   const _id = params.get("_id");
   login(tk as string, null);
   const { data } = useQuery({
-    queryKey: [QUERY_KEY.USER_ROOT, _id],
+    queryKey: [QUERY_KEY.USER.ROOT, _id],
     queryFn: async () => {
       try {
         const { data } = await getProfile();
