@@ -1,7 +1,15 @@
 import type { ILoginSchema } from "../../pages/auth/login/loginValidation";
+import type { IRegisterSchema } from "../../pages/auth/register/registerValidation";
 import type { IResponse } from "../types/Response";
 import type { IUser } from "../types/User";
 import api from "../utils/api";
+
+export const registerApi = async (
+  payload: Omit<IRegisterSchema, "confirmPassword">,
+): Promise<IResponse<IUser>> => {
+  const { data } = await api.post("/auth/register", payload);
+  return data;
+};
 
 export const loginApi = async (
   payload: ILoginSchema,

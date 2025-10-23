@@ -3,8 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useToast } from "../../../common/hooks/useToast";
-import { registerApi } from "../../../common/services/auth.service";
-import FormInput from "../../../components/common/FormInput";
 import { registerSchema, type IRegisterSchema } from "./registerValidation";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
