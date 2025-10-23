@@ -1,10 +1,58 @@
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { Checkbox } from "antd";
+import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Spin } from "antd";
 import { useState } from "react";
-import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
+import { useToast } from "../../../common/hooks/useToast";
+import { loginApi, loginGoole } from "../../../common/services/anth.service";
+import { useAuthStore } from "../../../common/store";
+import FormInput from "../../../components/common/FormInput";
+import { loginSchema, type ILoginSchema } from "./loginValidation";
 
 export default function LoginPage() {
-  const [hiddenPass, setHiddenPass] = useState(true);
+  const error_active = `Tài khoản của bạn chưa được xác thực!`;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const [error, setError] = useState(null);
+  const { message: antdMessage } = useToast();
+  const nav = useNavigate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (payload: ILoginSchema) => loginApi(payload),
+    onSuccess: ({ data, message }) => {
+      const login = useAuthStore.getState().login;
+      antdMessage.success(message);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("use", JSON.stringify(data.user));
+      login(data.accessToken, null);
+      setError(null);
+      nav("/");
+    },
+    onError: (error) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const err = error as any;
+      setError(err.response.data.message);
+    },
+  });
+
+  const onSubmit = (value: ILoginSchema) => {
+    mutate(value);
+  };
+
+  const { mutate: mutateGoogle, isPending: isPendingGoogle } = useMutation({
+    mutationFn: () => loginGoole(),
+    onSuccess: ({ data }) => {
+      window.location.href = data;
+    },
+  });
+
   return (
     <div className="flex items-center justify-end w-full ">
       <div className="rounded-md p-8 bg-white w-[70%] shadow-xl">
@@ -12,55 +60,82 @@ export default function LoginPage() {
           Đăng nhập
         </h2>
 
-        <form className="flex flex-col space-y-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Email
-            </label>
-            <input
-              type="email"
-              placeholder="Địa chỉ Email"
-              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Mật khẩu
-            </label>
-            <div className="relative ">
-              <input
-                type={`${hiddenPass ? "password" : "text"}`}
-                placeholder="Mật khẩu"
-                className="border border-gray-300 w-full rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <FormInput
+            {...register("email")}
+            placeholder="Nhập địa chỉ Email"
+            label="Email"
+            type="text"
+            error={errors.email}
+          />
+
+          <FormInput
+            {...register("password")}
+            required
+            label="Mật khẩu"
+            type="password"
+            placeholder="Nhập mật khẩu"
+            error={errors.password}
+          />
+
+          {error && (
+            <div
+              className={`bg-red-100 h-10 relative flex items-center px-2 rounded-md border border-red-400`}
+            >
+              <p className="text-red-500 text-sm">{error}</p>
+              {error === error_active && (
+                <button
+                  type="button"
+                  className="ml-1 cursor-pointer hover:opacity-85 text-green-700"
+                >
+                  Gửi lại mã
+                </button>
+              )}
+
               <button
                 type="button"
-                onClick={() => setHiddenPass(!hiddenPass)}
-                className="absolute right-3 top-[50%] translate-y-[-50%] cursor-pointer"
+                onClick={() => setError(null)}
+                className="absolute cursor-pointer hover:opacity-85 top-1 text-red-500 text-xs right-2"
               >
-                {hiddenPass ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                <CloseOutlined />
               </button>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Checkbox>Ghi nhớ đăng nhập</Checkbox>
-          </div>
+          )}
           <button
+            disabled={isPending}
             type="submit"
             className="bg-green-600 text-white font-semibold py-2 cursor-pointer rounded hover:bg-green-700 transition"
           >
-            Đăng nhập
+            {isPending ? (
+              <Spin
+                indicator={<LoadingOutlined style={{ color: "white" }} spin />}
+              />
+            ) : (
+              "Đăng Nhập"
+            )}
           </button>
         </form>
+
         <div>
           <p className="text-gray-500 my-4 text-center">Hoặc</p>
-          <button className="hover:border-green-600 hover:text-green-600 flex items-center justify-center gap-3 border w-full py-2 rounded-md cursor-pointer">
-            <img
-              src="https://imagepng.org/wp-content/uploads/2019/08/google-icon.png"
-              className="w-6"
-              alt=""
-            />
-            Đăng nhập với Google
+          <button
+            onClick={() => mutateGoogle()}
+            className="hover:border-green-600 hover:text-green-600 flex items-center justify-center gap-3 border w-full py-2 rounded-md cursor-pointer"
+          >
+            {isPendingGoogle ? (
+              <Spin
+                indicator={<LoadingOutlined style={{ color: "white" }} spin />}
+              />
+            ) : (
+              <>
+                <img
+                  src="https://imagepng.org/wp-content/uploads/2019/08/google-icon.png"
+                  className="w-6"
+                  alt=""
+                />
+                Đăng nhập với Google
+              </>
+            )}
           </button>
         </div>
 
