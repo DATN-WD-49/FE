@@ -1,10 +1,40 @@
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { Link } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { registerSchema, type IRegisterSchema } from "./registerValidation";
+import { useToast } from "../../../common/hooks/useToast";
+import { registerApi } from "../../../common/services/auth.service";
+import FormInput from "../../../components/common/FormInput";
 
 export default function RegisterPage() {
-  const [hiddenPass, setHiddenPass] = useState(true);
-  const [hiddenConfirmPass, setHiddenConfirmPass] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+  });
+  const { handleAxiosError, message: antdMessage } = useToast();
+  const nav = useNavigate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (payload: Omit<IRegisterSchema, "confirmPassword">) =>
+      registerApi(payload),
+    onSuccess: ({ message }) => {
+      antdMessage.success(message);
+      nav("/auth/login");
+    },
+    onError: (error) => {
+      handleAxiosError(error);
+    },
+  });
+  const onSubmit = (values: IRegisterSchema) => {
+    const { confirmPassword, ...payload } = values;
+    void confirmPassword;
+    mutate(payload);
+  };
   return (
     <div className="flex items-center justify-end w-full ">
       <div className="rounded-md p-8 bg-white w-[70%] shadow-xl">
@@ -12,81 +42,63 @@ export default function RegisterPage() {
           Đăng ký
         </h2>
 
-        <form action="#" method="POST" className="flex flex-col space-y-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Họ và tên
-            </label>
-            <input
-              type="text"
-              placeholder="Họ và tên"
-              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Địa chỉ email
-            </label>
-            <input
-              type="email"
-              placeholder="Email"
-              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Số điện thoại
-            </label>
-            <input
-              type="text"
-              placeholder="Số điện thoại"
-              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Mật khẩu
-            </label>
-            <div className="relative ">
-              <input
-                type={`${hiddenPass ? "password" : "text"}`}
-                placeholder="Mật khẩu"
-                className="border border-gray-300 w-full rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button
-                type="button"
-                onClick={() => setHiddenPass(!hiddenPass)}
-                className="absolute right-3 top-[50%] translate-y-[-50%] cursor-pointer"
-              >
-                {hiddenPass ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-              </button>
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span> Xác nhận mật khẩu
-            </label>
-            <div className="relative ">
-              <input
-                type={`${hiddenConfirmPass ? "password" : "text"}`}
-                placeholder="Xác nhận mật khẩu"
-                className="border border-gray-300 w-full rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button
-                type="button"
-                onClick={() => setHiddenConfirmPass(!hiddenConfirmPass)}
-                className="absolute right-3 top-[50%] translate-y-[-50%] cursor-pointer"
-              >
-                {hiddenConfirmPass ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-              </button>
-            </div>
-          </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col space-y-4"
+        >
+          <FormInput
+            label="Họ và tên"
+            placeholder="Họ và tên"
+            type="text"
+            {...register("userName")}
+            error={errors.userName}
+            required
+          />
+          <FormInput
+            label="Địa chỉ email"
+            placeholder="Email"
+            type="email"
+            {...register("email")}
+            error={errors.email}
+            required
+          />
+          <FormInput
+            label="Số điện thoại"
+            placeholder="Số điện thoại"
+            type="text"
+            {...register("phone")}
+            error={errors.phone}
+            required
+          />
 
+          <FormInput
+            label="Mật khẩu"
+            placeholder="Nhập mật khẩu của bạn"
+            type="password"
+            {...register("password")}
+            error={errors.password}
+            required
+          />
+          <FormInput
+            label="Xác nhận mật khẩu"
+            placeholder="Nhập lại mật khẩu của bạn"
+            type="password"
+            {...register("confirmPassword")}
+            error={errors.confirmPassword}
+            required
+          />
           <button
+            disabled={isPending}
             type="submit"
             className="bg-green-600 text-white font-semibold py-2 cursor-pointer rounded hover:bg-green-700 transition"
           >
-            Đăng ký
+            {isPending ? (
+              <Spin
+                indicator={<LoadingOutlined style={{ color: "white" }} spin />}
+              />
+            ) : (
+              "Đăng ký"
+            )}
           </button>
         </form>
         <div>

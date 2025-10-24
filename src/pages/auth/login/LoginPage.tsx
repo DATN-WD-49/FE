@@ -52,7 +52,6 @@ export default function LoginPage() {
       window.location.href = data;
     },
   });
-
   return (
     <div className="flex items-center justify-end w-full ">
       <div className="rounded-md p-8 bg-white w-[70%] shadow-xl">
@@ -77,7 +76,6 @@ export default function LoginPage() {
             placeholder="Nhập mật khẩu"
             error={errors.password}
           />
-
           {error && (
             <div
               className={`bg-red-100 h-10 relative flex items-center px-2 rounded-md border border-red-400`}
@@ -91,7 +89,6 @@ export default function LoginPage() {
                   Gửi lại mã
                 </button>
               )}
-
               <button
                 type="button"
                 onClick={() => setError(null)}

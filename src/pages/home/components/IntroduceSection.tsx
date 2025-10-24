@@ -43,7 +43,7 @@ const IntroduceSection = () => {
               </div>
 
               <a
-                href="/gioi-thieu-chung"
+                href="/news"
                 className="inline-block text-green-700 font-semibold hover:underline"
               >
                 Tìm hiểu thêm →

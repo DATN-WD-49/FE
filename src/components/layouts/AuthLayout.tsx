@@ -1,16 +1,24 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import Header from "./components/Header";
+import { useAuthSelector } from "../../common/store";
 
 const AuthLayout = () => {
+  const { isLogged } = useAuthSelector((state) => ({
+    isLogged: state.isLogged,
+  }));
+  if (isLogged) return <Navigate to="/" />;
   return (
     <>
       <Header isAuthPage={true} />
       <main
         style={{
           backgroundImage: `url(https://vanminh76.vn/wp-content/uploads/2024/03/bg-number.png)`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       >
-        <div className=" grid grid-cols-2 max-w-7xl xl:mx-auto mx-6 items-center min-h-[90vh]">
+        <div className=" grid grid-cols-2 max-w-7xl xl:mx-auto mx-6 items-center min-h-[90vh] py-8">
           <div className="flex flex-col items-center gap-8">
             <img
               src="https://www.freeiconspng.com/uploads/bus-png-1.png"
