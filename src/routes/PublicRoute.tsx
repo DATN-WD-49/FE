@@ -7,6 +7,7 @@ import ForgetpassPage from "../pages/auth/forgetpass/ForgetpassPage";
 import RegisterPage from "../pages/auth/register/RegisterPage";
 import LoginGooglePage from "../pages/auth/login/LoginGooglePage";
 import BookingPage from "../pages/booking/BookingPage";
+import News from "../pages/News/News";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "booking",
         element: <BookingPage />,
+      },
+      {
+        path: "/news",
+        element: <News />,
       },
     ],
   },
@@ -41,7 +46,6 @@ export const PublicRoute: RouteObject[] = [
       },
     ],
   },
-
   {
     path: "/login-google/:tk",
     element: <LoginGooglePage />,

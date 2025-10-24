@@ -1,9 +1,42 @@
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  forgetPasswordSchema,
+  type IForgetPasswordSchema,
+} from "./forgetPassValidation";
+import { useMutation } from "@tanstack/react-query";
+
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useToast } from "../../../common/hooks/useToast";
+import { resetPassword } from "../../../common/services/auth.service";
+import FormInput from "../../../components/common/FormInput";
 
 export default function ForgetpassPage() {
   const nav = useNavigate();
   const handlePrev = () => {
     nav(-1);
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(forgetPasswordSchema),
+  });
+  const { message: antdMessage, handleAxiosError } = useToast();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (payload: IForgetPasswordSchema) => resetPassword(payload),
+    onSuccess: ({ message }) => {
+      antdMessage.success(message);
+    },
+    onError: (error) => {
+      handleAxiosError(error);
+    },
+  });
+  const onSubmit = (values: IForgetPasswordSchema) => {
+    mutate(values);
   };
   return (
     <div className="flex items-center justify-end w-full ">
@@ -12,26 +45,34 @@ export default function ForgetpassPage() {
           Quên mật khẩu
         </h2>
 
-        <form className="flex flex-col space-y-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="">
-              <span className="text-red-500">*</span>Xác thực tài khoản
-            </label>
-            <input
-              type="text"
-              placeholder="Nhập số điện thoại đã đăng kí "
-              className="border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-          <div className="flex items-center gap-3"></div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col space-y-4"
+        >
+          <FormInput
+            {...register("email")}
+            label="Xác thực email"
+            placeholder="Điền địa chỉ email của bạn"
+            type="text"
+            required
+            error={errors.email}
+          />
           <button
+            disabled={isPending}
             type="submit"
             className="bg-green-600 text-white font-semibold py-2 cursor-pointer rounded hover:bg-green-700 transition"
           >
-            Tiếp tục
+            {isPending ? (
+              <Spin
+                indicator={<LoadingOutlined style={{ color: "white" }} spin />}
+              />
+            ) : (
+              "Xác nhận"
+            )}
           </button>
           <button
             type="button"
+            disabled={isPending}
             onClick={handlePrev}
             className="text-green-600 cursor-pointer font-semibold hover:underline flex items-center justify-center"
           >
