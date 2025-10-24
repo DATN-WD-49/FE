@@ -1,36 +1,55 @@
-import React from "react";
-import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import type { FieldError } from "react-hook-form";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: FieldError;
-  register?: UseFormRegisterReturn;
+  required?: boolean;
 }
 
-const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  ({ label, error, register, ...rest }, ref) => {
-    return (
-      <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1 text-gray-700">
-          {label}
-        </label>
+const FormInput: React.FC<FormInputProps> = ({
+  label,
+  required,
+  error,
+  type,
+  ...props
+}) => {
+  const [hidden, setHidden] = useState(type === "password");
+
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor={props.name} className="text-sm font-medium">
+        <p className={`${error ? "text-red-500" : ""}`}>
+          {required && <span className="text-red-500">*</span>} {label}
+        </p>
+      </label>
+
+      <div className="relative">
         <input
-          ref={ref}
-          {...register}
-          {...rest}
-          className={`border rounded-md p-2 focus:outline-none focus:ring-2 ${
+          {...props}
+          type={hidden ? "password" : "text"}
+          className={`border rounded p-2 pr-10 text-sm w-full focus:outline-none focus:ring-2 ${
             error
-              ? "border-red-500 focus:ring-red-400"
+              ? "border-red-500 focus:ring-red-500"
               : "border-gray-300 focus:ring-green-500"
-          }`}
+          }${props.className || ""}`}
         />
-        {error?.message && (
-          <p className="text-sm text-red-500 mt-1">{error.message}</p>
+        {type === "password" && (
+          <button
+            type="button"
+            tabIndex={-1}
+            onClick={() => setHidden((prev) => !prev)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+          >
+            {hidden ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+          </button>
         )}
       </div>
-    );
-  },
-);
-
-FormInput.displayName = "FormInput";
+      <p className="h-1.5 text-xs text-red-500 transition-all duration-200">
+        {error?.message?.toString() || ""}
+      </p>
+    </div>
+  );
+};
 export default FormInput;
