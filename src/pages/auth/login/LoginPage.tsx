@@ -6,10 +6,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useToast } from "../../../common/hooks/useToast";
-import { loginApi, loginGoole } from "../../../common/services/anth.service";
 import { useAuthStore } from "../../../common/store";
 import FormInput from "../../../components/common/FormInput";
 import { loginSchema, type ILoginSchema } from "./loginValidation";
+import { loginApi, loginGoole } from "../../../common/services/auth.service";
 
 export default function LoginPage() {
   const error_active = `Tài khoản của bạn chưa được xác thực!`;
