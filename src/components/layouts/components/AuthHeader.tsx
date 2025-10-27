@@ -3,6 +3,7 @@ import { scrollToSection } from "../../../common/utils";
 import { Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
+  DashboardOutlined,
   FileSearchOutlined,
   LogoutOutlined,
   UserOutlined,
@@ -40,15 +41,24 @@ const AuthHeader = () => {
   });
   void data;
   const items: MenuProps["items"] = [
+    ...(user?.role === "admin"
+      ? [
+          {
+            label: <Link to={"/admin"}>Quản trị hệ thống</Link>,
+            icon: <DashboardOutlined />,
+            key: "0",
+          },
+        ]
+      : []),
     {
       label: <Link to={"/profile"}>Thông tin cá nhân</Link>,
       icon: <UserOutlined />,
-      key: "0",
+      key: "1",
     },
     {
       label: <Link to={"/profile/orders"}>Lịch sử đặt vé</Link>,
       icon: <FileSearchOutlined />,
-      key: "1",
+      key: "2",
     },
     {
       type: "divider",
@@ -59,6 +69,7 @@ const AuthHeader = () => {
       icon: <LogoutOutlined className="rotate-180" />,
       onClick: () => {
         logout();
+        nav("/");
       },
     },
   ];
@@ -74,12 +85,16 @@ const AuthHeader = () => {
         <Dropdown menu={{ items }}>
           <Link
             to={"/profile"}
-            className=" flex items-center gap-3 font-medium cursor-pointer hover:opacity-85 duration-300 py-3 px-6 uppercase rounded-full text-black!"
+            className=" flex items-center gap-3 font-medium cursor-pointer hover:opacity-85 duration-300 py-3 px-6  rounded-full text-black!"
           >
             <Avatar src={user?.avatar} size="default" />
-            <p className="whitespace-nowrap text-ellipsis max-w-[100px] overflow-hidden">
-              Chào, {user?.userName}
-            </p>
+            <div className="flex flex-col">
+              <p>Xin chào</p>
+              <p className="whitespace-nowrap text-ellipsis max-w-[100px] overflow-hidden">
+                {" "}
+                {user?.userName}
+              </p>
+            </div>
           </Link>
         </Dropdown>
       ) : (
