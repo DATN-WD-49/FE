@@ -5,7 +5,7 @@ import api from "../utils/api";
 
 export const updateCar = async (
   carID: string,
-  payload: Omit<ICarPayload, "floor">,
+  payload: Omit<ICarPayload, "floors">,
 ) => {
   const { data } = await api.patch(`/car/update/${carID}`, payload);
   return data;
