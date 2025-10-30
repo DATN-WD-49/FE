@@ -104,14 +104,16 @@ export const columnCar = (getSorterProps: (field: keyof ICar) => object) => {
           </Tooltip>
 
           <Space>
-            <Tooltip title="Cập nhật">
-              <Button
-                type="text"
-                icon={<EditOutlined style={{ color: "blue" }} />}
-                disabled={!record.status}
-                size="small"
-              />
-            </Tooltip>
+            <Link to={`/admin/car/update/${record._id}`}>
+              <Tooltip title="Cập nhật">
+                <Button
+                  type="text"
+                  icon={<EditOutlined style={{ color: "blue" }} />}
+                  disabled={!record.status}
+                  size="small"
+                />
+              </Tooltip>
+            </Link>
 
             {record.status ? (
               <Popconfirm
