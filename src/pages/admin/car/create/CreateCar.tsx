@@ -171,6 +171,9 @@ const CreateCar = () => {
 
           <div className="flex items-center gap-2 justify-end mt-6">
             <Button
+              onClick={() => {
+                form.resetFields();
+              }}
               className="hover:border-red-500! hover:text-red-500!"
               htmlType="reset"
               icon={<ReloadOutlined />}
