@@ -57,14 +57,16 @@ export const FloorsFormList = ({
             </div>
           ))}
 
-          <Button
-            type="dashed"
-            onClick={() => add({ seatCount: 16, cols: 3 })}
-            icon={<PlusOutlined />}
-            className="w-full"
-          >
-            Thêm tầng
-          </Button>
+          {floors.length < 2 && (
+            <Button
+              type="dashed"
+              onClick={() => add({ seatCount: 16, cols: 3 })}
+              icon={<PlusOutlined />}
+              className="w-full"
+            >
+              Thêm tầng
+            </Button>
+          )}
         </div>
       )}
     </Form.List>
