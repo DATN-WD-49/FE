@@ -5,4 +5,10 @@ export const QUERY_KEY = {
   CAR: {
     ROOT: "CAR",
   },
+  SEAT: {
+    ROOT: "SEAT",
+  },
+  ROUTE: {
+    ROOT: "ROUTE",
+  },
 };
