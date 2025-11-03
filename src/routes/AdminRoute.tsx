@@ -3,6 +3,8 @@ import AdminLayout from "../components/layouts/AdminLayout";
 import ListCar from "../pages/admin/car/ListCar";
 import UpdateCar from "../pages/admin/car/update/UpdateCar";
 import DetailCar from "../pages/admin/car/detail/DetailCar";
+import CreateCar from "../pages/admin/car/create/CreateCar";
+import ListRoute from "../pages/admin/route/ListRoute";
 import UpdateSeatCar from "../pages/admin/car/update/seatCar/UpdateSeatCar";
 import CreateCar from "../pages/admin/car/create/CreateCar";
 
@@ -17,19 +19,34 @@ export const AdminRoute: RouteObject[] = [
       },
       {
         path: "car",
-        element: <ListCar />,
+        children: [
+          { index: true, element: <ListCar /> },
+          {
+            path: ":id",
+            element: <DetailCar />,
+          },
+          {
+            path: "create",
+            element: <CreateCar />,
+          },
+          {
+            path: "update/:id",
+            element: <UpdateCar />,
+          },
+          {
+            path: "update/seat/:id",
+            element: <UpdateSeatCar />,
+          },
+        ],
       },
       {
-        path: "car/:id",
-        element: <DetailCar />,
-      },
-      {
-        path: "car/update/:id",
-        element: <UpdateCar />,
-      },
-      {
-        path: "car/update/seat/:id",
-        element: <UpdateSeatCar />,
+        path: "route",
+        children: [
+          {
+            index: true,
+            element: <ListRoute />,
+          },
+        ],
       },
       {
         path: "car/create",
