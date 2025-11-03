@@ -9,7 +9,7 @@ interface FloorsFormListProps {
 
 export const FloorsFormList = ({
   name = "floors",
-  initaValue = [{ seatCount: 16, cols: 3 }],
+  initaValue = [{ seatCount: 18, cols: 3 }],
 }: FloorsFormListProps) => {
   return (
     <Form.List name={name} initialValue={initaValue}>
@@ -60,7 +60,7 @@ export const FloorsFormList = ({
           {floors.length < 2 && (
             <Button
               type="dashed"
-              onClick={() => add({ seatCount: 16, cols: 3 })}
+              onClick={() => add({ seatCount: 18, cols: 3 })}
               icon={<PlusOutlined />}
               className="w-full"
             >

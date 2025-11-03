@@ -6,7 +6,6 @@ import DetailCar from "../pages/admin/car/detail/DetailCar";
 import CreateCar from "../pages/admin/car/create/CreateCar";
 import ListRoute from "../pages/admin/route/ListRoute";
 import UpdateSeatCar from "../pages/admin/car/update/seatCar/UpdateSeatCar";
-import CreateCar from "../pages/admin/car/create/CreateCar";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -47,10 +46,6 @@ export const AdminRoute: RouteObject[] = [
             element: <ListRoute />,
           },
         ],
-      },
-      {
-        path: "car/create",
-        element: <CreateCar />,
       },
     ],
   },
