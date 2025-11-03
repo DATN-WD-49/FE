@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AppstoreOutlined,
   EditOutlined,
   EyeOutlined,
   LockOutlined,
@@ -102,6 +103,11 @@ export const columnCar = (getSorterProps: (field: keyof ICar) => object) => {
               <EyeOutlined style={{ cursor: "pointer", fontSize: 18 }} />
             </Link>
           </Tooltip>
+          <Tooltip title="Chỉnh sửa ghế ngồi">
+            <Link to={`/admin/car/update/seat/${record._id}`}>
+              <AppstoreOutlined style={{ cursor: "pointer", fontSize: 18 }} />
+            </Link>
+          </Tooltip>
 
           <Space>
             <Link to={`/admin/car/update/${record._id}`}>
@@ -112,6 +118,9 @@ export const columnCar = (getSorterProps: (field: keyof ICar) => object) => {
                   disabled={!record.status}
                   size="small"
                 />
+                <Link className="mx-1" to={`/admin/car/update/${record._id}`}>
+                  <EditOutlined style={{ color: "blue" }} />
+                </Link>
               </Tooltip>
             </Link>
 
