@@ -112,12 +112,6 @@ export const columnCar = (getSorterProps: (field: keyof ICar) => object) => {
           <Space>
             <Link to={`/admin/car/update/${record._id}`}>
               <Tooltip title="Cập nhật">
-                <Button
-                  type="text"
-                  icon={<EditOutlined style={{ color: "blue" }} />}
-                  disabled={!record.status}
-                  size="small"
-                />
                 <Link className="mx-1" to={`/admin/car/update/${record._id}`}>
                   <EditOutlined style={{ color: "blue" }} />
                 </Link>
