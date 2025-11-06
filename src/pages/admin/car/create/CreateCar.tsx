@@ -68,19 +68,6 @@ const CreateCar = () => {
           </Tag>
           <div className="flex items-center gap-2 mt-2">
             <Form.Item
-              name={"name"}
-              style={{ width: "100%" }}
-              label="Tên xe"
-              required
-              rules={formRules.textRange("Tên xe", 6, 50)}
-            >
-              <Input
-                placeholder="Nhập tên xe(Ví dụ: Mercedes Limousine)"
-                style={{ height: 40, borderRadius: 5 }}
-              />
-            </Form.Item>
-
-            <Form.Item
               style={{ width: "100%" }}
               name={"licensePlate"}
               label="Biển số xe"
@@ -114,9 +101,6 @@ const CreateCar = () => {
               />
             </Form.Item>
           </div>
-          <Tag color="green" className="text-sm! font-medium">
-            Thông tin loại xe
-          </Tag>
 
           <div className="flex items-center gap-2 mt-2">
             <Form.Item
@@ -147,18 +131,6 @@ const CreateCar = () => {
             >
               <Input
                 placeholder="Nhập tên kiểu xe (Ví dụ: Transit)"
-                style={{ height: 40, borderRadius: 5 }}
-              />
-            </Form.Item>
-            <Form.Item
-              style={{ width: "100%" }}
-              name={["model", "engine"]}
-              label="Dung tích động cơ"
-              required
-              rules={[formRules.required("Dung tích động cơ")]}
-            >
-              <Input
-                placeholder="Nhập tên dung tích động cơ (Ví dụ: 2.2L)"
                 style={{ height: 40, borderRadius: 5 }}
               />
             </Form.Item>
