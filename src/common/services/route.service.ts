@@ -27,3 +27,10 @@ export const updateStatusRoute = async (
   const { data } = await api.patch(`/route/status/${id}`);
   return data;
 };
+export const updateRoute = async (
+  id: string,
+  payload: Partial<IRoute>,
+): Promise<IResponse<IRoute>> => {
+  const { data } = await api.patch(`/route/update/${id}`, payload);
+  return data;
+};

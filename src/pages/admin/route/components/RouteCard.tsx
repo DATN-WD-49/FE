@@ -57,7 +57,7 @@ const RouteCard = ({ item }: { item: IRoute }) => {
             Ngày tạo: {new Date(item.createAt).toLocaleDateString("vi-VN")}
           </p>
           <div className="flex gap-2 mt-3 justify-end items-center">
-            <Link to={"/route/update/:id"}>
+            <Link to={`/admin/route/update/${item._id}`}>
               <Button size="middle" icon={<EditOutlined />}></Button>
             </Link>
             <Button
