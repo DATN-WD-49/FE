@@ -33,21 +33,29 @@ const ListRoute = () => {
         </div>
       )}
       {!isLoading && data?.data.length !== 0 && (
-        <div className="grid grid-cols-3 gap-8">
-          {data?.data.map((item, index) => (
-            <RouteCard item={item} key={index} />
-          ))}
+        <>
+          <div className="grid grid-cols-3 gap-8">
+            {data?.data.map((item, index) => (
+              <RouteCard item={item} key={index} />
+            ))}
+          </div>
+          <div className="mt-4">
+            <Pagination
+              align="end"
+              onChange={onSelectPaginateChange}
+              current={data?.meta?.page}
+              pageSize={data?.meta?.limit}
+              total={data?.meta?.total}
+            />
+          </div>
+        </>
+      )}
+      {data?.data.length === 0 && (
+        <div className="min-h-[45vh] flex items-center justify-center">
+          {" "}
+          <p className="text-base font-medium">Không có tuyến đường nào</p>
         </div>
       )}
-      <div className="mt-4">
-        <Pagination
-          align="end"
-          onChange={onSelectPaginateChange}
-          current={data?.meta?.page}
-          pageSize={data?.meta?.limit}
-          total={data?.meta?.total}
-        />
-      </div>
     </div>
   );
 };

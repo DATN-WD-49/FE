@@ -34,3 +34,9 @@ export const updateRoute = async (
   const { data } = await api.patch(`/route/update/${id}`, payload);
   return data;
 };
+export const createRoute = async (
+  payload: Partial<IRoute>,
+): Promise<IResponse<IRoute>> => {
+  const { data } = await api.post("/route", payload);
+  return data;
+};

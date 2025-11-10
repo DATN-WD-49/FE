@@ -17,8 +17,10 @@ export const formatCurrency = (price: number | string): string => {
   if (isNaN(number)) return "0 đ";
   return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 };
+
 type Primitive = string | number | boolean | null | undefined;
 type Cleanable = Record<string, unknown> | Primitive | Cleanable[];
+
 export function deepCleanup<T extends Cleanable>(obj: T): T | undefined {
   if (Array.isArray(obj)) {
     const cleanedArray = obj
@@ -34,7 +36,6 @@ export function deepCleanup<T extends Cleanable>(obj: T): T | undefined {
       | T
       | undefined;
   }
-
   if (typeof obj === "object" && obj !== null) {
     const cleanedObj: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(obj)) {
@@ -55,6 +56,5 @@ export function deepCleanup<T extends Cleanable>(obj: T): T | undefined {
       | T
       | undefined;
   }
-
   return obj === "" ? undefined : obj;
 }
