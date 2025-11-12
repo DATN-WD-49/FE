@@ -1,4 +1,5 @@
 import Banner from "./components/Banner";
+import BookingSection from "./components/BookingSection";
 import IntroduceSection from "./components/IntroduceSection";
 import QuantitySection from "./components/QuantitySection";
 import RoadSection from "./components/RoadSection";
@@ -10,7 +11,9 @@ const HomePage = () => {
       <section>
         <Banner />
       </section>
-      <section id="booking"></section>
+      <section id="booking">
+        <BookingSection />
+      </section>
       <section>
         <IntroduceSection />
       </section>
