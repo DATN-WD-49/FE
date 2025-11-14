@@ -41,3 +41,10 @@ export const createRoute = async (
   const { data } = await api.post("/route", payload);
   return data;
 };
+
+export const getWards = async (
+  provinceId: string,
+): Promise<IResponse<IProvince[]>> => {
+  const { data } = await api.get(`/route/wards/${provinceId}`);
+  return data;
+};
