@@ -1,8 +1,7 @@
 import { CheckCircleOutlined, ClearOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router";
 
 const VerifyUser = () => {
   const [searchParams] = useSearchParams();
