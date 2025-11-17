@@ -9,15 +9,17 @@ export interface IPoint {
   label: string;
   desciption: string;
 }
+export interface IDistrict extends Omit<IPoint, "description"> {
+  description: string[];
+}
 
-export interface IDisstrict extends Omit<IPoint,
-  "description"> {
-description?: string;
-  }
+export interface IPointWithDistrict extends IPoint {
+  district: IDistrict;
+}
 
-  export interface IPointWithDistrict extends IPoint {
-    district:IDisstrict;
-  }
+export interface IDisstrict extends Omit<IPoint, "description"> {
+  description?: string;
+}
 
 export interface IPointSelect extends Partial<IPoint> {
   value: string;
@@ -25,12 +27,9 @@ export interface IPointSelect extends Partial<IPoint> {
 export interface IRoute {
   _id: string;
   name: string;
-  description?: string;
   pickupPoint: IPointWithDistrict;
   dropPoint: IPointWithDistrict;
-  viaCities: ICity[];
-  pickupPoint: IPoint;
-  dropPoint: IPoint;
+  description?: string;
   routePrice: number;
   distance: string;
   duration: number;
