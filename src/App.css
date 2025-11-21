@@ -74,3 +74,7 @@
   padding: 0 11px;
 }
 
+.custom-timepicker-popup .ant-picker-time-panel {
+  width: 250px;
+}
+
