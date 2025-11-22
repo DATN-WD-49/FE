@@ -71,7 +71,7 @@ const BookingSection = () => {
                 onClear={() => {
                   form.setFieldValue("dropPoint", null);
                 }}
-                options={dataPick?.data?.map((item) => ({
+                options={dataPick?.data.map((item) => ({
                   value: item._id,
                   label: item.label,
                 }))}
