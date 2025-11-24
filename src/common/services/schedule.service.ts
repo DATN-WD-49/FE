@@ -1,3 +1,4 @@
+
 import type { IParams } from "../types";
 import type { IResponse } from "../types/Response";
 import type {
@@ -36,5 +37,28 @@ export const createManySchedule = async (
 
 export const updateDisableSchedule = async (id: string) => {
   const { data } = await api.patch(`/schedule/update-disable/${id}`);
+  return data;
+};
+
+
+export const createSchedule = async (
+  payload: ISchedule,
+): Promise <IResponse<ISchedule>> => {
+  const { data } = await api.post("/schedule", payload);
+  return data;
+};
+
+export const insertManyContinue = async (payload: ISchedule[]) =>{
+  const { data } = await api.post("/schedule/many-continue", payload);
+  return data;
+};
+
+
+
+export const updateSchedule = async (
+  id: string,
+  payload: ISchedule,
+): Promise<IResponse<ISchedule>> => {
+  const { data } = await api.patch(`/schedule/update/${id}`, payload);
   return data;
 };

@@ -1,4 +1,4 @@
-import { type ModalFuncProps } from 'antd';
+import { type ModalFuncProps } from "antd";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { App } from "antd";
 import type { AxiosError } from "axios";
@@ -12,7 +12,7 @@ type HandleAxiosErrorOptions = {
 export type CustomModalOptions = ModalFuncProps & {
   type?: "confirm" | "error" | "info" | "warning";
   field?: string;
-  fallback?:string;
+  fallback?: string;
 };
 
 export const useToast = () => {
@@ -39,7 +39,6 @@ export const useToast = () => {
 
     return msg;
   };
-
 
   const handleOpenModalError = (
     error: unknown,
@@ -69,7 +68,6 @@ export const useToast = () => {
       closeModal: () => modalInstance.destroy?.(),
     };
   };
-
 
   return { handleAxiosError, message, handleOpenModalError };
 };
