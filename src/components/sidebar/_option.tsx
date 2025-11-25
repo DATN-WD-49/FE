@@ -42,9 +42,7 @@ export const menuGroups: IMenuItem[] = [
   {
     icon: <CalendarOutlined />,
     label: "Quản lý lịch chạy",
-    children: [
-      { label: "Tạo lịch chạy", route: "/admin/schedule/create" },
-      { label: "Tất cả lịch chạy", route: "/admin/schedule" },
-    ],
+    route: "/admin/schedule",
+
   },
 ];

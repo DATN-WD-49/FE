@@ -1,4 +1,3 @@
-
 import type { IParams } from "../types";
 import type { IResponse } from "../types/Response";
 import type {
@@ -40,20 +39,17 @@ export const updateDisableSchedule = async (id: string) => {
   return data;
 };
 
-
 export const createSchedule = async (
   payload: ISchedule,
-): Promise <IResponse<ISchedule>> => {
+): Promise<IResponse<ISchedule>> => {
   const { data } = await api.post("/schedule", payload);
   return data;
 };
 
-export const insertManyContinue = async (payload: ISchedule[]) =>{
+export const insertManyContinue = async (payload: ISchedule[]) => {
   const { data } = await api.post("/schedule/many-continue", payload);
   return data;
 };
-
-
 
 export const updateSchedule = async (
   id: string,
