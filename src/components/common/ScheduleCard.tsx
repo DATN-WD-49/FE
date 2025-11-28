@@ -11,6 +11,8 @@ import type { ISchedule } from "../../common/types/Schedule";
 import dayjs from "dayjs";
 import { formatCurrency } from "../../common/utils";
 import { useQueryClient } from "@tanstack/react-query";
+import { getSocket } from "../../socket/socket-client";
+import { QUERY_KEY } from "../../common/constans/queryKey";
 
 const ScheduleCard = ({ schedule }: { schedule: ISchedule }) => {
   const [isOpenSeatMap, setOpenSeatMap] = useState(false);
