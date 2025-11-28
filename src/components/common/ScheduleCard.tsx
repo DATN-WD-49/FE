@@ -4,16 +4,40 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SeatPickSection from "./SeatPickSection";
 import ViaCitiesModal from "./ViaCitiesModal";
 import type { ISchedule } from "../../common/types/Schedule";
 import dayjs from "dayjs";
 import { formatCurrency } from "../../common/utils";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ScheduleCard = ({ schedule }: { schedule: ISchedule }) => {
   const [isOpenSeatMap, setOpenSeatMap] = useState(false);
-  console.log(schedule);
+  const queryClient = useQueryClient();
+  const socket = getSocket();
+  const handleOpenSchedule = (scheduleId: string) => {
+    if (!isOpenSeatMap) {
+      socket.emit("joinSchedule", scheduleId);
+      setOpenSeatMap(true);
+      return;
+    }
+    socket.emit("leaveSchedule", scheduleId);
+    setOpenSeatMap(false);
+    return;
+  };
+  useEffect(() => {
+    const handleSeatUpdate = () => {
+      queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT.ROOT),
+      });
+    };
+    socket.on("seatUpdated", handleSeatUpdate);
+    return () => {
+      socket.emit("leaveSchedule", schedule._id);
+      socket.off("seatUpdated", handleSeatUpdate);
+    };
+  }, [queryClient, schedule._id, socket]);
   return (
     <div className="w-full">
       <div
@@ -62,7 +86,7 @@ const ScheduleCard = ({ schedule }: { schedule: ISchedule }) => {
         </div>
         <div className="flex items-center">
           <Button
-            onClick={() => setOpenSeatMap(!isOpenSeatMap)}
+            onClick={() => handleOpenSchedule(schedule._id)}
             style={{
               height: 40,
               width: 130,
@@ -78,7 +102,9 @@ const ScheduleCard = ({ schedule }: { schedule: ISchedule }) => {
           </Button>
         </div>
       </div>
-      {isOpenSeatMap && <SeatPickSection />}
+      {isOpenSeatMap && (
+        <SeatPickSection carId={schedule.carId._id} scheduleId={schedule._id} />
+      )}
     </div>
   );
 };
