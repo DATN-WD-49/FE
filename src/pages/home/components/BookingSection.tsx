@@ -67,11 +67,12 @@ const BookingSection = () => {
         Đặt vé xe ngay
       </h2>
       <div className="max-w-7xl mx-6 xl:mx-auto py-8">
-        <Form onFinish={handleSubmit} form={form}>
-          <div className="flex gap-6">
+        <Form onFinish={handleSubmit} layout="vertical" form={form}>
+          <div className="flex gap-6 items-end">
             <Form.Item
               style={{ flex: 1 }}
               name={"pickupPoint"}
+              label="Điểm xuất phát"
               rules={[formRules.required("Điểm đi", true)]}
             >
               <Select
@@ -94,6 +95,7 @@ const BookingSection = () => {
             <Form.Item
               style={{ flex: 1 }}
               name={"dropPoint"}
+              label="Điểm đến"
               rules={[formRules.required("Điểm đến", true)]}
             >
               <Select
@@ -112,6 +114,7 @@ const BookingSection = () => {
             <Form.Item
               style={{ flex: 1 }}
               name={"time"}
+              label="Ngày di chuyển"
               rules={[formRules.required("Ngày di chuyển", true)]}
             >
               <DatePicker
