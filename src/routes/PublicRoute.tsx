@@ -9,6 +9,7 @@ import LoginGooglePage from "../pages/auth/login/LoginGooglePage";
 import BookingPage from "../pages/booking/BookingPage";
 import News from "../pages/News/News";
 import VerifyUser from "../pages/auth/VerifyUser";
+import CheckoutPage from "../pages/checkout/CheckoutPage";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "bookings",
         element: <BookingPage />,
+      },
+      {
+        path: "/checkout/:id",
+        element: <CheckoutPage />,
       },
       {
         path: "/news",

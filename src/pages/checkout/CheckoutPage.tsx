@@ -1,5 +1,6 @@
 import { GiftFilled } from "@ant-design/icons";
 import { Button, Checkbox, Radio } from "antd";
+import CountTime from "./components/CountTime";
 
 const CheckoutPage = () => {
   return (
