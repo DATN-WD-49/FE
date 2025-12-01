@@ -53,7 +53,7 @@ const TableCustom = <T extends object>({
           }}
         />
       </div>
-      {showPagination && pageSize && currentPage && totalDocs && (
+          {showPagination && pageSize && currentPage && totalDocs !== 0 && (
         <Space
           style={{
             display: "flex",

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 
-
 import { Select } from "antd";
 import { getAllRoute } from "../../../../common/services/route.service";
 import { useTable } from "../../../../common/hooks/useTable";

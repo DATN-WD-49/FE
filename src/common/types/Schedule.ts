@@ -1,3 +1,6 @@
+import type { ICar } from "./Car";
+import type { IRoute } from "./Route";
+
 export interface ICrew {
   userId: IUser | string;
   role: "driver" | "assistant";

@@ -45,7 +45,9 @@ const CardSchedule = ({ item }: { item: IScheduleCarIdRouteId }) => {
         <p className="text-gray-700/60">Tổng lịch chạy:</p>
         <p className="font-medium text-sm">{item.count} Lịch chạy</p>
         <p className="text-xs">Đang hoạt động: {item.activeCount}</p>
-       <p className="text-xs">Ngùng hoạt động / Bị huỷ: {item.inActiveCount}</p>
+        <p className="text-xs">
+          Ngùng hoạt động / Bị huỷ: {item.inActiveCount}
+        </p>
       </div>
 
       <div>
@@ -54,9 +56,7 @@ const CardSchedule = ({ item }: { item: IScheduleCarIdRouteId }) => {
         <p className="text-xs">
           Lịch chạy hoàn thành {item.statusCount.cancelled}
         </p>
-
       </div>
-
 
       <div>
         <p className="text-gray-700/60">Thao tác:</p>

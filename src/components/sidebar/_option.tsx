@@ -43,6 +43,5 @@ export const menuGroups: IMenuItem[] = [
     icon: <CalendarOutlined />,
     label: "Quản lý lịch chạy",
     route: "/admin/schedule",
-
   },
 ];

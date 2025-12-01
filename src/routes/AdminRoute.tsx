@@ -58,17 +58,16 @@ export const AdminRoute: RouteObject[] = [
           },
         ],
       },
-    ],
-  },
-  {
-    path: "schedule",
-    children: [
       {
-        index: true,
-        element: <ListSchedule />,
+        path: "schedule",
+        children: [
+          {
+            index: true,
+            element: <ListSchedule />,
+          },
+        ],
       },
-      
     ],
   },
-
+ 
 ];

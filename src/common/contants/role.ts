@@ -3,5 +3,5 @@ export const ROLE_LABEL = {
   user: "Người dùng",
   staff: "Nhân viên",
   driver: "Lái xe",
-  asistant: "Phụ xe",
+  assistant: "Phụ xe",
 };

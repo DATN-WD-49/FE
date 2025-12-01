@@ -24,6 +24,17 @@ export const getAllScheduleCarRoute = async (
   });
   return data;
 };
+export const getAllScheduleByCarIdRouteId = async (
+  carId: string,
+  routeId: string,
+  params?: IParams,
+): Promise<IResponse<ISchedule[]>> => {
+  const { data } = await api.get(
+    `/schedule?carId=${carId}&routeId=${routeId}`,
+    { params },
+  );
+  return data;
+};
 
 export const createManySchedule = async (
   payload: ICreateManySchedulePayload,

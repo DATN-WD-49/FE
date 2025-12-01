@@ -8,7 +8,7 @@ export const DAYOFWEEK_OPTIONS = [
   { value: 0, label: "Chủ nhật" },
 ];
 
-export const DAYOFWEEK_: Record<number, string> = {
+export const DAYOFWEEK_LABEL: Record<number, string> = {
   0: "Chủ Nhật",
   1: "Thứ hai",
   2: "Thứ ba",

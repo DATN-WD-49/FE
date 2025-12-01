@@ -6,7 +6,7 @@ import { getAllScheduleCarRoute } from "../../../../common/services/schedule.ser
 import CardSchedule from "./CardSchedule";
 import type { ISchedule } from "../../../../common/types/Schedule";
 import FilterSchedule from "./FilterSchedule";
-
+import ModalCreateSchedule from "./ModalCreateSchedule";
 
 const ListSchedule = () => {
   const { query, onSelectPaginateChange } = useTable<ISchedule>();
