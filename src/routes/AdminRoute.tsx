@@ -69,5 +69,4 @@ export const AdminRoute: RouteObject[] = [
       },
     ],
   },
- 
 ];

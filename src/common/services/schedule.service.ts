@@ -41,7 +41,7 @@ export const createManySchedule = async (
 ): Promise<
   IResponse<{ createdSchedules: ISchedule[]; failedSchedules: ISchedule[] }>
 > => {
-  const { data } = await api.post("/schedule/many-continue", payload);
+  const { data } = await api.post("/schedule/many", payload);
   return data;
 };
 
