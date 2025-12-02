@@ -25,11 +25,11 @@ export const PublicRoute: RouteObject[] = [
         element: <BookingPage />,
       },
       {
-        path: "/checkout/:id",
+        path: "checkout/:id",
         element: <CheckoutPage />,
       },
       {
-        path: "/news",
+        path: "news",
         element: <News />,
       },
     ],

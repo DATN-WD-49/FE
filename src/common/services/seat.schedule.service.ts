@@ -15,6 +15,6 @@ export const getSeatMapSchedule = async (
 };
 
 export const toogleSeat = async (payload: IPayloadSeatSchedue) => {
-  const { data } = await api.post(`${prefix}/toogle-seat`, payload);
+  const { data } = await api.post(`${prefix}/toggle-seat`, payload);
   return data;
 };
