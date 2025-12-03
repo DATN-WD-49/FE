@@ -6,6 +6,8 @@ import { QUERY_KEY } from "../../../common/contants/queryKey";
 import { getPointRoute } from "../../../common/services/route.service";
 import type { IPointSelect } from "../../../common/types/Route";
 import { formRules } from "../../../common/utils/formRules";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const BookingSection = () => {
   const [form] = Form.useForm();
@@ -28,18 +30,27 @@ const BookingSection = () => {
     dropPoint: IPointSelect;
     time: string;
   }) => {
-    const selecteDate = dayjs(values.time);
-    const isToday = selecteDate.isSame(dayjs(), "day");
-    const startTimeFrom = isToday
-      ? dayjs().add(2, "hour").second(0).millisecond(0).toISOString()
-      : selecteDate.startOf("day").toISOString();
-    console.log(startTimeFrom);
-    const startTimeTo = selecteDate.endOf("day").toISOString();
+    const selectedLocal = dayjs(values.time);
+    const todayLocal = dayjs();
+    const isToday = selectedLocal.isSame(todayLocal, "day");
+    let startTimeFrom;
+    let startTimeTo;
+    if (isToday) {
+      startTimeFrom = todayLocal
+        .add(2, "hour")
+        .second(0)
+        .millisecond(0)
+        .toISOString();
+      startTimeTo = todayLocal.endOf("day").toISOString();
+    } else {
+      startTimeFrom = selectedLocal.startOf("day").toISOString();
+      startTimeTo = selectedLocal.endOf("day").toISOString();
+    }
     const params = {
       startTimeFrom,
       startTimeTo,
-      pickupPointId: values.pickupPoint.value,
-      "dropPoint._id": values.dropPoint.value,
+      pickPointId: values.pickupPoint.value,
+      dropPointId: values.dropPoint.value,
     };
     window.scrollTo({
       top: 0,
@@ -56,11 +67,12 @@ const BookingSection = () => {
         Đặt vé xe ngay
       </h2>
       <div className="max-w-7xl mx-6 xl:mx-auto py-8">
-        <Form onFinish={handleSubmit} form={form}>
-          <div className="flex gap-6">
+        <Form onFinish={handleSubmit} layout="vertical" form={form}>
+          <div className="flex gap-6 items-end">
             <Form.Item
               style={{ flex: 1 }}
               name={"pickupPoint"}
+              label="Điểm xuất phát"
               rules={[formRules.required("Điểm đi", true)]}
             >
               <Select
@@ -75,6 +87,7 @@ const BookingSection = () => {
                   value: item._id,
                   label: item.label,
                 }))}
+                optionFilterProp="label"
                 placeholder="Chọn điểm đi"
               />
             </Form.Item>
@@ -82,14 +95,17 @@ const BookingSection = () => {
             <Form.Item
               style={{ flex: 1 }}
               name={"dropPoint"}
+              label="Điểm đến"
               rules={[formRules.required("Điểm đến", true)]}
             >
               <Select
                 style={{ height: 50 }}
-                options={dataDrop?.data.map((item) => ({
+                labelInValue
+                options={dataDrop?.data?.map((item) => ({
                   value: item._id,
                   label: item.label,
                 }))}
+                optionFilterProp="label"
                 placeholder="Chọn điểm đi"
                 disabled={!pickupPoint}
               />
@@ -98,6 +114,7 @@ const BookingSection = () => {
             <Form.Item
               style={{ flex: 1 }}
               name={"time"}
+              label="Ngày di chuyển"
               rules={[formRules.required("Ngày di chuyển", true)]}
             >
               <DatePicker

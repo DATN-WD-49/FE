@@ -8,11 +8,11 @@ import ServicesSection from "./components/ServicesSection";
 const HomePage = () => {
   return (
     <>
-      <section>
-        <Banner />
-      </section>
       <section id="booking">
         <BookingSection />
+      </section>
+      <section>
+        <Banner />
       </section>
       <section>
         <IntroduceSection />

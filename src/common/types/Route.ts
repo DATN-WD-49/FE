@@ -14,15 +14,11 @@ export interface IDistrict extends Omit<IPoint, "description"> {
 }
 
 export interface IPointWithDistrict extends IPoint {
-  district: IDistrict;
+  district: IDistrict[];
 }
 
 export interface IDisstrict extends Omit<IPoint, "description"> {
   description?: string;
-}
-
-export interface IPointWithDistrict extends IPoint {
-  district: IDisstrict;
 }
 
 export interface IPointSelect extends Partial<IPoint> {
