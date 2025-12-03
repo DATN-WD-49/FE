@@ -1,3 +1,4 @@
+import { type ModalFuncProps } from "antd";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { App } from "antd";
 import type { AxiosError } from "axios";
@@ -8,9 +9,14 @@ type HandleAxiosErrorOptions = {
   fallback?: string;
   silent?: boolean;
 };
+export type CustomModalOptions = ModalFuncProps & {
+  type?: "confirm" | "error" | "info" | "warning";
+  field?: string;
+  fallback?: string;
+};
 
 export const useToast = () => {
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
 
   const handleAxiosError = (
     error: unknown,
@@ -34,5 +40,34 @@ export const useToast = () => {
     return msg;
   };
 
-  return { handleAxiosError, message };
+  const handleOpenModalError = (
+    error: unknown,
+    content: React.ReactNode | string = null,
+    options?: CustomModalOptions,
+  ) => {
+    const {
+      type = "error",
+      field = "message",
+      fallback = "Đã có lỗi xảy ra!",
+      ...otherOptions
+    } = options || {};
+
+    const err = error as any;
+    const msg = err?.response?.data?.[field] || err?.message || fallback;
+
+    const modalInstance = (modal as any)[type]({
+      title: msg,
+      content: content || "Có lỗi không xác định!",
+      closable: true,
+      maskClosable: true,
+      ...otherOptions,
+    });
+
+    return {
+      instance: modalInstance,
+      closeModal: () => modalInstance.destroy?.(),
+    };
+  };
+
+  return { handleAxiosError, message, handleOpenModalError };
 };

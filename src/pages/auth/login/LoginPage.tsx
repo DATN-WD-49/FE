@@ -38,7 +38,6 @@ export default function LoginPage() {
       nav("/");
     },
     onError: (error) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = error as any;
       setError(err.response.data.message);
     },

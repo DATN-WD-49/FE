@@ -1,3 +1,6 @@
+import type { ICar } from "./Car";
+import type { IRoute } from "./Route";
+
 export interface ICrew {
   userId: IUser | string;
   role: "driver" | "assistant";
@@ -30,6 +33,13 @@ export interface IScheduleCarIdRouteId extends Omit<ISchedule, "dayOfWeek"> {
   count: number;
   inActiveCount: number;
   activeCount: number;
+  statusCount: {
+    pending: number;
+    confirmed: number;
+    running: number;
+    completed: number;
+    cancelled: number;
+  };
   dayOfWeek: number[];
 }
 

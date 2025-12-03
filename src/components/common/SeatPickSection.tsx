@@ -40,7 +40,6 @@ const SeatPickSection = ({
     ),
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
     if (!hasHeldSeat) return;
     nav(`/checkout/${scheduleId}`);

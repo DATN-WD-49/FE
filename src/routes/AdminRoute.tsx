@@ -8,6 +8,7 @@ import ListRoute from "../pages/admin/route/ListRoute";
 import UpdateSeatCar from "../pages/admin/car/update/seatCar/UpdateSeatCar";
 import UpdateRoute from "../pages/admin/route/update/UpdateRoute";
 import CreateRoute from "../pages/admin/route/CreateRoute";
+import ListSchedule from "../pages/admin/schedule/components/ListSchedule.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -54,6 +55,15 @@ export const AdminRoute: RouteObject[] = [
           {
             path: "update/:id",
             element: <UpdateRoute />,
+          },
+        ],
+      },
+      {
+        path: "schedule",
+        children: [
+          {
+            index: true,
+            element: <ListSchedule />,
           },
         ],
       },
