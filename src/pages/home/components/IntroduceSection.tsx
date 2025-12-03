@@ -58,7 +58,7 @@ const IntroduceSection = () => {
                 className="group relative block overflow-hidden rounded-md shadow-lg"
               >
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920475/2_irvkl6.jpg"
+                  src="public/z7289845725129_e1d0acabc694a8ff208dd03085c402d3.jpg"
                   alt="Lịch sử hình thành"
                   className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-75"
                 />
@@ -91,7 +91,7 @@ const IntroduceSection = () => {
                 className="group relative block overflow-hidden rounded-md shadow-lg"
               >
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/3_bnmxg8.jpg"
+                  src="public/z7289849341293_3cd0616344ef25f715b6ce9a0a694bcb.jpg"
                   alt="Tầm nhìn sứ mệnh"
                   className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-75"
                 />

@@ -23,7 +23,7 @@ const ServicesSection = () => {
               {/* <!-- Ô 1 --> */}
               <div className="relative rounded-xl overflow-hidden group">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289849341293_3cd0616344ef25f715b6ce9a0a694bcb.jpg"
                   alt="Phản hồi"
                   className="w-full h-60 md:h-56 object-cover"
                 />
@@ -40,7 +40,7 @@ const ServicesSection = () => {
               {/* <!-- Ô 2 --> */}
               <div className="relative rounded-xl overflow-hidden group">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852173513_7be9ace5d814b85c6048edc460d857c8.jpg"
                   alt="Phản hồi"
                   className="w-full h-60 md:h-56 object-cover"
                 />
@@ -58,7 +58,7 @@ const ServicesSection = () => {
               {/* <!-- Ô 3 --> */}
               <div className="relative rounded-xl overflow-hidden group">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852201674_c88da3dc7ea099b964fdac30d9a81404.jpg"
                   alt="Phản hồi"
                   className="w-full h-60 md:h-56 object-cover"
                 />
@@ -74,7 +74,7 @@ const ServicesSection = () => {
               {/* <!-- Ô 4 --> */}
               <div className="relative rounded-xl overflow-hidden group">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852388583_d5ec43a94993ef735c2eb4f7cc6e0d45.jpg"
                   alt="Phản hồi"
                   className="w-full h-60 md:h-56 object-cover"
                 />
