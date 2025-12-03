@@ -6,7 +6,7 @@ import type {
   IScheduleCarIdRouteId,
 } from "../types/Schedule";
 import api from "../utils/api";
-
+//lấy danh sách lịch trình
 export const getAllSchedules = async (
   params?: IParams,
 ): Promise<IResponse<ISchedule[]>> => {
@@ -15,7 +15,7 @@ export const getAllSchedules = async (
   });
   return data;
 };
-
+//lấy danh sách lịch trình theo dạng nhóm
 export const getAllScheduleCarRoute = async (
   params: IParams,
 ): Promise<IResponse<IScheduleCarIdRouteId[]>> => {
@@ -24,7 +24,7 @@ export const getAllScheduleCarRoute = async (
   });
   return data;
 };
-
+//Tạo hàng loạt lịch trình cùng một lúc
 export const createManySchedule = async (
   payload: ICreateManySchedulePayload,
 ): Promise<
@@ -33,7 +33,7 @@ export const createManySchedule = async (
   const { data } = await api.post("/schedule/many-continue", payload);
   return data;
 };
-
+//Vô hiệu hóa (hoặc kích hoạt lại) một lịch trình
 export const updateDisableSchedule = async (id: string) => {
   const { data } = await api.patch(`/schedule/update-disable/${id}`);
   return data;

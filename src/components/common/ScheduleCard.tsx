@@ -4,36 +4,56 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SeatPickSection from "./SeatPickSection";
 import ViaCitiesModal from "./ViaCitiesModal";
 import type { ISchedule } from "../../common/types/Schedule";
 import dayjs from "dayjs";
 import { formatCurrency } from "../../common/utils";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSocket } from "../../socket/socket-client";
 import { QUERY_KEY } from "../../common/constans/queryKey";
+import { unHoldSeat } from "../../common/services/seat.schedule.service";
 
-const ScheduleCard = ({ schedule }: { schedule: ISchedule }) => {
-  const [isOpenSeatMap, setOpenSeatMap] = useState(false);
-  const queryClient = useQueryClient();
+const ScheduleCard = ({
+  schedule,
+  openScheduleId,
+  setOpenScheduleId,
+}: {
+  schedule: ISchedule;
+  openScheduleId: string | null;
+  setOpenScheduleId: (id: string | null) => void;
+}) => {
+  const isOpenSeatMap = openScheduleId === schedule._id;
   const socket = getSocket();
+  const queryClient = useQueryClient();
+  const handleSeatUpdate = () => {
+    queryClient.invalidateQueries({
+      predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT.ROOT),
+    });
+  };
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      return await unHoldSeat();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT),
+      });
+    },
+  });
   const handleOpenSchedule = (scheduleId: string) => {
-    if (!isOpenSeatMap) {
-      socket.emit("joinSchedule", scheduleId);
-      setOpenSeatMap(true);
+    if (isOpenSeatMap) {
+      mutate();
+      socket.emit("leaveSchedule", scheduleId);
+      setOpenScheduleId(null);
       return;
     }
-    socket.emit("leaveSchedule", scheduleId);
-    setOpenSeatMap(false);
-    return;
+    mutate();
+    socket.emit("joinSchedule", scheduleId);
+    setOpenScheduleId(scheduleId);
   };
   useEffect(() => {
-    const handleSeatUpdate = () => {
-      queryClient.invalidateQueries({
-        predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT.ROOT),
-      });
-    };
     socket.on("seatUpdated", handleSeatUpdate);
     return () => {
       socket.emit("leaveSchedule", schedule._id);
