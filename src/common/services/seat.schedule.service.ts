@@ -18,3 +18,7 @@ export const toogleSeat = async (payload: IPayloadSeatSchedue) => {
   const { data } = await api.post(`${prefix}/toggle-seat`, payload);
   return data;
 };
+export const unHoldSeat = async () => {
+  const { data } = await api.patch(`${prefix}/un-hold`);
+  return data;
+};

@@ -23,10 +23,12 @@ const FilterBooking = ({
   const pickupPoint = Form.useWatch("pickupPoint", form);
   const dropPoint = Form.useWatch("dropPoint", form);
   const nav = useNavigate();
+  // Lấy danh sách Điểm Đi
   const { data: dataPick } = useQuery({
     queryKey: [QUERY_KEY.POINT.PICK],
     queryFn: () => getPointRoute(),
   });
+  // Lấy danh sách Điểm Đến (Phụ thuộc vào Điểm Đi)
   const { data: dataDrop } = useQuery({
     queryKey: [QUERY_KEY.POINT.DROP, pickupPoint],
     queryFn: () => getPointRoute({ pickupPointId: pickupPoint.value }),

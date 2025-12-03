@@ -7,6 +7,8 @@ export const initSocket = (token: string): Socket => {
     socket = io("http://localhost:8000", {
       auth: { token },
       transports: ["websocket"],
+      //WebSocket là một giao thức truyền thông hai chiều (bi-directional)
+      // và liên tục (persistent) giữa client và server
     });
 
     socket.on("connect", () => console.log("Socket connected", socket?.id));
