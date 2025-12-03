@@ -9,6 +9,7 @@ import UpdateSeatCar from "../pages/admin/car/update/seatCar/UpdateSeatCar";
 import UpdateRoute from "../pages/admin/route/update/UpdateRoute";
 import CreateRoute from "../pages/admin/route/CreateRoute";
 import ListSchedule from "../pages/admin/schedule/components/ListSchedule.tsx";
+import DetailSchedule from "../pages/admin/schedule/details/DetailSchedule.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -64,6 +65,10 @@ export const AdminRoute: RouteObject[] = [
           {
             index: true,
             element: <ListSchedule />,
+          },
+          {
+            path: "show/:carId/:routeId",
+            element: <DetailSchedule />,
           },
         ],
       },

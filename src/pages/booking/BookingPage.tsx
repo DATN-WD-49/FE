@@ -15,6 +15,7 @@ const BookingPage = () => {
   const { query } = useFilter();
   console.log(query);
   const { pickPointId, dropPointId, ...otherQuery } = query;
+  console.log(pickPointId, dropPointId);
   const { data: routeData } = useQuery({
     queryKey: [QUERY_KEY.ROUTE.ROOT, pickPointId, dropPointId],
     queryFn: () =>

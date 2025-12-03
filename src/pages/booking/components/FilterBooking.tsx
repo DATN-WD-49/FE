@@ -19,45 +19,47 @@ const FilterBooking = ({
 }: {
   initialValues: TInitialValues;
 }) => {
+  console.log(initialValues);
   const [form] = Form.useForm();
   const pickupPoint = Form.useWatch("pickupPoint", form);
   const dropPoint = Form.useWatch("dropPoint", form);
   const nav = useNavigate();
-  // Lấy danh sách Điểm Đi
   const { data: dataPick } = useQuery({
     queryKey: [QUERY_KEY.POINT.PICK],
     queryFn: () => getPointRoute(),
   });
-  // Lấy danh sách Điểm Đến (Phụ thuộc vào Điểm Đi)
   const { data: dataDrop } = useQuery({
     queryKey: [QUERY_KEY.POINT.DROP, pickupPoint],
-    queryFn: () => getPointRoute({ pickupPointId: pickupPoint.value }),
-    enabled: !!pickupPoint,
+    queryFn: () =>
+      getPointRoute({
+        pickupPointId: pickupPoint.value
+          ? pickupPoint.value
+          : initialValues.pickupPointId,
+      }),
+    enabled: !!initialValues.pickupPointId,
   });
   const handleSubmit = (values: {
     pickupPoint: IPointSelect;
     dropPoint: IPointSelect;
     time: string;
   }) => {
-    const selectedLocal = dayjs(values.time); // local time
-    const todayLocal = dayjs(); // local
-
+    const selectedLocal = dayjs(values.time);
+    const todayLocal = dayjs();
     const isToday = selectedLocal.isSame(todayLocal, "day");
-
     let startTimeFrom;
     let startTimeTo;
-
     if (isToday) {
-      startTimeFrom = todayLocal
-        .add(2, "hour")
-        .second(0)
-        .millisecond(0)
-        .toISOString();
+      const plus2h = todayLocal.add(2, "hour");
+      startTimeFrom = plus2h.isAfter(todayLocal.endOf("day"))
+        ? todayLocal.endOf("day").toISOString()
+        : plus2h.second(0).millisecond(0).toISOString();
+
       startTimeTo = todayLocal.endOf("day").toISOString();
     } else {
       startTimeFrom = selectedLocal.startOf("day").toISOString();
       startTimeTo = selectedLocal.endOf("day").toISOString();
     }
+
     const params = {
       startTimeFrom,
       startTimeTo,
