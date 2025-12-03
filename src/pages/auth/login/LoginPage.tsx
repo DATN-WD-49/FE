@@ -10,6 +10,7 @@ import { useAuthStore } from "../../../common/store";
 import FormInput from "../../../components/common/FormInput";
 import { loginSchema, type ILoginSchema } from "./loginValidation";
 import { loginApi, loginGoole } from "../../../common/services/auth.service";
+import { initSocket } from "../../../socket/socket-client";
 
 export default function LoginPage() {
   const error_active = `Tài khoản của bạn chưa được xác thực!`;
@@ -32,11 +33,11 @@ export default function LoginPage() {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("use", JSON.stringify(data.user));
       login(data.accessToken, null);
+      initSocket(data.accessToken);
       setError(null);
       nav("/");
     },
     onError: (error) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const err = error as any;
       setError(err.response.data.message);
     },

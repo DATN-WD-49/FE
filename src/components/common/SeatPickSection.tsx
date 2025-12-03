@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Tooltip } from "antd";
+import { Button, Form, Input, Select, Spin, Tooltip } from "antd";
 import SeatMap from "./SeatMap";
 import {
   MailOutlined,
@@ -6,28 +6,67 @@ import {
   SendOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useBookingSelector } from "../../common/store/useBookingStore";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEY } from "../../common/constans/queryKey";
+import { getSeatMapSchedule } from "../../common/services/seat.schedule.service";
+import { useAuthSelector } from "../../common/store";
+import { useNavigate } from "react-router";
+import { formatCurrency } from "../../common/utils";
 
 const seatStatuses = [
   { label: "Trống", color: "bg-blue-300", desc: "Ghế trống, có thể chọn" },
   { label: "Đã đặt", color: "bg-pink-100", desc: "Ghế đã được đặt" },
   { label: "Của bạn", color: "bg-[#FFFCD1]", desc: "Ghế bạn đã chọn" },
   { label: "Giữ", color: "bg-gray-300", desc: "Ghế đang giữ" },
-  { label: "Không khả dụng", color: "bg-red-300", desc: "Ghế không thể chọn" },
+  { label: "Không khả dụng", color: "#fca5a5", desc: "Ghế không thể chọn" },
 ];
 
-const SeatPickSection = () => {
-  const seats = useBookingSelector((state) => state.seats);
-  const onSubmit = (values: unknown) => {
+const SeatPickSection = ({
+  carId,
+  scheduleId,
+}: {
+  carId: string;
+  scheduleId: string;
+}) => {
+  const userId = useAuthSelector((state) => state.user?._id);
+  const nav = useNavigate();
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEY.SEAT.ROOT, carId, scheduleId],
+    queryFn: async () => getSeatMapSchedule(carId, scheduleId),
+  });
+  const hasHeldSeat = data?.data.some((itemt) =>
+    itemt.seats.some(
+      (seat) => seat.userId === userId && seat.bookingStatus === "hold",
+    ),
+  );
+
+  const onSubmit = (values: any) => {
+    if (!hasHeldSeat) return;
+    nav(`/checkout/${scheduleId}`);
     console.log(values);
   };
+  const allSeats = data?.data.flatMap((item) => item.seats) || [];
+  const holdSeat = allSeats.filter(
+    (seat) => seat.bookingStatus === "hold" && seat.userId === userId,
+  );
+
   return (
     <div className="mt-2 bg-white w-full p-4 rounded-lg shadow-md flex gap-6">
       <div className="w-[70%] bg-gray-100 py-6 rounded-lg px-6">
-        <div className=" flex flex-col gap-4 items-center">
-          <p className="text-center font-semibold">Tầng 1</p>
-          <SeatMap totalSeats={16} cols={3} />
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center min-h-[30vh]">
+            <Spin />
+          </div>
+        ) : (
+          <div className="flex items-start gap-16 justify-center">
+            {data?.data.map((item, index) => (
+              <div key={index} className=" flex flex-col gap-4 items-center">
+                <p className="text-center font-semibold">{item.floor}</p>
+                <SeatMap floor={item} scheduleId={scheduleId} />
+              </div>
+            ))}
+          </div>
+        )}
         <div className="flex items-center justify-end text-xs mt-8 gap-6">
           {seatStatuses.map((status) => (
             <div className="flex items-center gap-2 cursor-pointer">
@@ -42,10 +81,16 @@ const SeatPickSection = () => {
         </div>
         <div className="flex items-center mt-6 gap-8 justify-end">
           <p className="flex items-center gap-4">
-            Tổng số ghế đã chọn: <span className="text-lg font-medium">0</span>
+            Tổng số ghế đã chọn:{" "}
+            <span className="text-lg font-medium">{holdSeat.length}</span>
           </p>
           <p className="flex items-center gap-4">
-            Giá tiền: <span className="text-lg font-medium">0đ</span>
+            Giá tiền:{" "}
+            <span className="text-lg font-medium">
+              {formatCurrency(
+                holdSeat.reduce((acc, seat) => acc + seat.price, 0),
+              )}
+            </span>
           </p>
         </div>
         <div className="mt-6">
@@ -164,7 +209,7 @@ const SeatPickSection = () => {
           <Form.Item>
             <Button
               htmlType="submit"
-              disabled={!seats.length}
+              disabled={!hasHeldSeat}
               type="primary"
               style={{
                 background: "#0c7d41",

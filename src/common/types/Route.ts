@@ -30,6 +30,7 @@ export interface IRoute {
   pickupPoint: IPointWithDistrict;
   dropPoint: IPointWithDistrict;
   description?: string;
+  viaCities: ICity[];
   routePrice: number;
   distance: string;
   duration: number;

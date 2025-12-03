@@ -6,8 +6,12 @@ import { QUERY_KEY } from "../../common/constans/queryKey";
 import { getAllSchedules } from "../../common/services/schedule.service";
 import { getAllRoute } from "../../common/services/route.service";
 import { Spin } from "antd";
+import { useState } from "react";
+import { useUnHoldOnBack } from "../../common/hooks/useUnHoldOnBack";
 
 const BookingPage = () => {
+  const [openScheduleId, setOpenScheduleId] = useState<string | null>(null);
+  useUnHoldOnBack();
   const { query } = useFilter();
   console.log(query);
   const { pickPointId, dropPointId, ...otherQuery } = query;
@@ -21,7 +25,7 @@ const BookingPage = () => {
       }),
   });
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.SCHEDULE, "CLIENT", ...Object.values(query)],
+    queryKey: [QUERY_KEY.SCHEDULE.ROOT, "CLIENT", ...Object.values(query)],
     queryFn: () => {
       const routeIds = routeData?.data.map((item) => item._id);
       console.log(routeIds);
@@ -64,7 +68,12 @@ const BookingPage = () => {
         ) : (
           <div className="flex flex-col mt-8 gap-6 items-center">
             {data?.data?.map((item, index: number) => (
-              <ScheduleCard key={index} schedule={item} />
+              <ScheduleCard
+                key={index}
+                schedule={item}
+                openScheduleId={openScheduleId}
+                setOpenScheduleId={setOpenScheduleId}
+              />
             ))}
           </div>
         )}
