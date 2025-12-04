@@ -27,7 +27,7 @@ const RoadSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-1">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289849341293_3cd0616344ef25f715b6ce9a0a694bcb.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -43,7 +43,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-2">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852173513_7be9ace5d814b85c6048edc460d857c8.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -59,7 +59,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-3">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852388583_d5ec43a94993ef735c2eb4f7cc6e0d45.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -75,7 +75,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-4">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289849341293_3cd0616344ef25f715b6ce9a0a694bcb.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -94,7 +94,7 @@ const RoadSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-5">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852173513_7be9ace5d814b85c6048edc460d857c8.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -110,7 +110,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-6">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852201674_c88da3dc7ea099b964fdac30d9a81404.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -126,7 +126,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-7">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289852388583_d5ec43a94993ef735c2eb4f7cc6e0d45.jpg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
@@ -142,7 +142,7 @@ const RoadSection = () => {
 
               <div className="bg-white rounded-lg shadow-lg overflow-hidden fade-in delay-8">
                 <img
-                  src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920474/z6068434141657_5c4e841c32617e8faa361ed3ee1e8459_r44bju.jpg"
+                  src="public/z7289849341293_3cd0616344ef25f715b6ce9a0a694bcb.jpgg"
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4 text-center">
