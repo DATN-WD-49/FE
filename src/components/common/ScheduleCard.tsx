@@ -4,12 +4,62 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect } from "react";
 import SeatPickSection from "./SeatPickSection";
 import ViaCitiesModal from "./ViaCitiesModal";
+import type { ISchedule } from "../../common/types/Schedule";
+import { getSocket } from "../../socket/socket-client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEY } from "../../common/constans/queryKey";
+import { unHoldSeat } from "../../common/services/seat.schedule.service";
+import dayjs from "dayjs";
+import { formatCurrency } from "../../common/utils";
 
-const ScheduleCard = () => {
-  const [isOpenSeatMap, setOpenSeatMap] = useState(false);
+const ScheduleCard = ({
+  schedule,
+  openScheduleId,
+  setOpenScheduleId,
+}: {
+  schedule: ISchedule;
+  openScheduleId: string | null;
+  setOpenScheduleId: (id: string | null) => void;
+}) => {
+  const isOpenSeatMap = openScheduleId === schedule._id;
+  const socket = getSocket();
+  const queryClient = useQueryClient();
+  const handleSeatUpdate = () => {
+    queryClient.invalidateQueries({
+      predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT.ROOT),
+    });
+  };
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      return await unHoldSeat();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT),
+      });
+    },
+  });
+  const handleOpenSchedule = (scheduleId: string) => {
+    if (isOpenSeatMap) {
+      mutate();
+      socket.emit("leaveSchedule", scheduleId);
+      setOpenScheduleId(null);
+      return;
+    }
+    mutate();
+    socket.emit("joinSchedule", scheduleId);
+    setOpenScheduleId(scheduleId);
+  };
+  useEffect(() => {
+    socket.on("seatUpdated", handleSeatUpdate);
+    return () => {
+      socket.emit("leaveSchedule", schedule._id);
+      socket.off("seatUpdated", handleSeatUpdate);
+    };
+  }, [queryClient, schedule._id, socket]);
   return (
     <div className="w-full">
       <div
@@ -19,12 +69,20 @@ const ScheduleCard = () => {
         <div className="flex gap-2 flex-col items-start">
           <p className="flex items-center gap-3 ">
             <ClockCircleFilled />
-            <span className="text-blue-400 font-medium">19:15 - 03:45</span>
+            <span className="text-blue-400 font-medium">
+              {dayjs(schedule?.startTime).format("HH:mm")} -{" "}
+              {dayjs(schedule?.arrivalTime).format("HH:mm")}
+            </span>
           </p>
-          <p className="text-gray-400">Thời gian: 8 giờ 30 phút</p>
+          <p className="text-gray-400">
+            Thời gian dự kiến: {schedule?.routeId?.duration} giờ
+          </p>
         </div>
         <div className="flex gap-2 flex-col items-start">
-          <p>Quảng Bình - BX Nước Ngầm</p>
+          <p className="font-semibold text-base">
+            {schedule?.routeId?.pickupPoint?.label} -{" "}
+            {schedule?.routeId?.dropPoint?.label}
+          </p>
           <ViaCitiesModal>
             <button className="text-sm text-blue-400 cursor-pointer hover:bg-blue-100 px-2 rounded-md duration-300">
               <EnvironmentOutlined /> Thành phố đi qua
@@ -32,21 +90,25 @@ const ScheduleCard = () => {
           </ViaCitiesModal>
         </div>
         <div className="flex gap-2 flex-col items-start">
-          <p className="flex items-center gap-2 text-xs">
+          <div className="flex items-center gap-2 text-xs">
             <CarOutlined />
             <span className="font-semibold text-orange-700 text-base">
-              5/32
+              5/{schedule.carId.maxSeatCapacity}
             </span>
-            <span className="font-medium">Chỗ còn chống</span>
-          </p>
-          <p className="text-gray-400">Xe giường nằm</p>
+            <p className="inline-block bg-white border border-black rounded px-2 py-[2px] text-xs font-bold tracking-wider shadow-[inset_0_0_3px_rgba(0,0,0,0.25)] uppercase font-mono ">
+              {schedule.carId.licensePlate || " Chưa cập nhật"}
+            </p>
+          </div>
+          <p className="text-gray-400">{schedule.carId.type}</p>
         </div>
         <div className="flex items-center">
-          <p className="text-orange-700 text-lg font-semibold">320,000</p>
+          <p className="text-orange-700 text-lg font-semibold">
+            {formatCurrency(schedule.price as number)}
+          </p>
         </div>
         <div className="flex items-center">
           <Button
-            onClick={() => setOpenSeatMap(!isOpenSeatMap)}
+            onClick={() => handleOpenSchedule(schedule._id)}
             style={{
               height: 40,
               width: 130,
@@ -62,7 +124,9 @@ const ScheduleCard = () => {
           </Button>
         </div>
       </div>
-      {isOpenSeatMap && <SeatPickSection />}
+      {isOpenSeatMap && (
+        <SeatPickSection carId={schedule.carId._id} scheduleId={schedule._id} />
+      )}
     </div>
   );
 };
