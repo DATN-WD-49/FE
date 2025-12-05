@@ -1,11 +1,10 @@
+import { Button, Modal } from "antd";
 import React, {
   useState,
   type MouseEventHandler,
   type ReactElement,
 } from "react";
 import type { IPointWithDistrict } from "../../../common/types/Route";
-import { Button, Modal } from "antd";
-
 type TProps = {
   children: ReactElement;
   pickupPoint: IPointWithDistrict;
@@ -32,7 +31,9 @@ const DetailPointModal = ({
           },
         )}
       <Modal
-        style={{ top: 30 }}
+        style={{
+          top: 30,
+        }}
         title={
           <p className="flex items-center gap-2">
             <img src="./station.png" alt="" />
@@ -69,7 +70,7 @@ const DetailPointModal = ({
               <div key={item._id} className="px-6 py-4 rounded-lg bg-gray-100">
                 <h3 className="font-semibold">KV {item.label}</h3>
                 <div className=" flex flex-col gap-2 mt-2">
-                  {item.desciption.map((item) => (
+                  {item.description.map((item) => (
                     <p className="border-b-2 border-white pb-2">{item}</p>
                   ))}
                 </div>
@@ -94,4 +95,5 @@ const DetailPointModal = ({
     </>
   );
 };
+
 export default DetailPointModal;
