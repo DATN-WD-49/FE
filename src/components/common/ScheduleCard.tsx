@@ -6,7 +6,6 @@ import {
 import { Button } from "antd";
 import { useEffect } from "react";
 import SeatPickSection from "./SeatPickSection";
-import ViaCitiesModal from "./ViaCitiesModal";
 import type { ISchedule } from "../../common/types/Schedule";
 import { getSocket } from "../../socket/socket-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -14,6 +13,7 @@ import { QUERY_KEY } from "../../common/constans/queryKey";
 import { unHoldSeat } from "../../common/services/seat.schedule.service";
 import dayjs from "dayjs";
 import { formatCurrency } from "../../common/utils";
+import DetailPointModal from "../../pages/booking/components/DetailPointModal";
 
 const ScheduleCard = ({
   schedule,
@@ -83,11 +83,15 @@ const ScheduleCard = ({
             {schedule?.routeId?.pickupPoint?.label} -{" "}
             {schedule?.routeId?.dropPoint?.label}
           </p>
-          <ViaCitiesModal>
+          <DetailPointModal
+            dropPoint={schedule.routeId.dropPoint}
+            pickupPoint={schedule.routeId.pickupPoint}
+            name={`${schedule.routeId.pickupPoint.label} - ${schedule.routeId.dropPoint.label}`}
+          >
             <button className="text-sm text-blue-400 cursor-pointer hover:bg-blue-100 px-2 rounded-md duration-300">
-              <EnvironmentOutlined /> Thành phố đi qua
+              <EnvironmentOutlined /> Các điểm đón trả khách
             </button>
-          </ViaCitiesModal>
+          </DetailPointModal>
         </div>
         <div className="flex gap-2 flex-col items-start">
           <div className="flex items-center gap-2 text-xs">
