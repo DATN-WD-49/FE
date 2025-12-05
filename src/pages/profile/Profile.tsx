@@ -1,209 +1,133 @@
+import { useAuthStore, useAuthSelector } from "../../common/store";
+import { Link, useNavigate } from "react-router";
+import {
+  HistoryOutlined,
+  LogoutOutlined,
+  CarOutlined,
+  ReadOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { message } from "antd";
+
 const Profile = () => {
+  // 1. Lấy thông tin user từ Redux Store
+  const user = useAuthSelector((state) => state.user);
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  // 2. Xử lý Đăng xuất
+  const handleLogout = () => {
+    logout(); // Xóa token & user info trong store
+    message.success("Đăng xuất thành công!");
+    navigate("/auth/login"); // Chuyển về trang đăng nhập
+  };
+
+  // Ảnh mặc định nếu user chưa có avatar
+  const defaultAvatar =
+    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+
   return (
-    <div className="bg-white">
+    <div className="bg-gray-50 min-h-screen pb-12">
       {/* Tiêu đề */}
-      <h2 className="text-6xl font-bold text-center text-green-700 bg-[#F3F4F6] py-4 rounded-xl">
-        Thông tin cá nhân
-      </h2>
+      <div className="bg-[#F3F4F6] py-6 mb-8 shadow-sm">
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-green-800">
+          Thông tin cá nhân
+        </h2>
+      </div>
 
       {/* Nội dung chính */}
-      <main className="flex items-center justify-center min-h-screen bg-gray-100 px-6 py-12">
-        <div className="flex w-full max-w-[1280px] bg-gray-50 rounded-2xl shadow-2xl overflow-hidden">
-          {/* Trái: Avatar */}
-          <div className="w-1/2 flex flex-col items-center justify-center bg-gradient-to-b from-green-100 to-white p-10">
-            <img
-              src="https://res.cloudinary.com/dznlvsapr/image/upload/v1759920475/2_irvkl6.jpg"
-              alt="Avatar"
-              className="w-80 h-80 rounded-full object-cover shadow-md"
-            />
-            <h1 className="mt-8 text-5xl font-bold text-green-800">
-              Lê Phục Hưng
-            </h1>
-          </div>
-
-          {/* Phải: Thông tin */}
-          <div className="w-1/2 flex flex-col justify-center p-16 space-y-6 text-gray-800 bg-[#FFFCD1]">
-            <h2 className="text-4xl font-bold mb-6">
-              Xin Chào: <span className="text-green-700">Lê Phục Hưng</span>
-            </h2>
-
-            <div className="space-y-4 text-xl leading-relaxed">
-              <p>
-                <strong>Họ và tên:</strong> Lê Phục Hưng
-              </p>
-              <p>
-                <strong>Số điện thoại:</strong> 0365 252 737
-              </p>
-              <p>
-                <strong>Email:</strong> hunglpph48998@gmail.com
-              </p>
-              <p>
-                <strong>Địa chỉ:</strong> Phúc Thành, Yên Thành, Nghệ An.
-              </p>
+      <main className="container mx-auto px-4 max-w-6xl">
+        <div className="flex flex-col md:flex-row w-full bg-white rounded-2xl shadow-xl overflow-hidden min-h-[600px]">
+          {/* CỘT TRÁI: Avatar & Tên */}
+          <div className="md:w-5/12 flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-white p-10 border-r border-gray-100">
+            <div className="relative group">
+              <img
+                src={user?.avatar || defaultAvatar}
+                alt="Avatar"
+                className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-lg border-4 border-white group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
 
-            {/* Nút điều hướng */}
-            <div className="grid grid-cols-2 gap-6 mt-10">
-              <a
-                href="lich-su-dat-ve.html"
-                className="text-center bg-green-700 text-white px-6 py-4 rounded-2xl shadow-md hover:bg-green-800 transition font-semibold text-lg"
-              >
-                Lịch sử đặt vé
-              </a>
+            <h1 className="mt-8 text-3xl md:text-4xl font-bold text-green-800 text-center">
+              {user?.userName || "Khách hàng"}
+            </h1>
+            <p className="text-gray-500 mt-2">{user?.email}</p>
+            {user?.role === "admin" && (
+              <span className="mt-2 bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                Administrator
+              </span>
+            )}
+          </div>
 
-              <a
-                href="index.html"
-                className="text-center bg-green-700 text-white px-6 py-4 rounded-2xl shadow-md hover:bg-green-800 transition font-semibold text-lg"
-              >
-                Đăng Xuất
-              </a>
+          {/* CỘT PHẢI: Thông tin chi tiết & Menu */}
+          <div className="md:w-7/12 flex flex-col justify-center p-8 md:p-16 space-y-8 bg-[#FFFCD1]/30">
+            <div>
+              <h2 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">
+                Xin Chào,{" "}
+                <span className="text-green-700">{user?.userName}</span> !
+              </h2>
 
-              <a
-                href="dat-ve.html"
-                className="text-center bg-green-700 text-white px-6 py-4 rounded-2xl shadow-md hover:bg-green-800 transition font-semibold text-lg"
-              >
-                Đặt vé
-              </a>
+              <div className="space-y-4 text-lg text-gray-700">
+                <div className="flex items-start">
+                  <strong className="w-32 text-gray-900">Họ và tên:</strong>
+                  <span>{user?.userName || "Chưa cập nhật"}</span>
+                </div>
+                <div className="flex items-start">
+                  <strong className="w-32 text-gray-900">Số điện thoại:</strong>
+                  <span>{user?.phone || "Chưa cập nhật"}</span>
+                </div>
+                <div className="flex items-start">
+                  <strong className="w-32 text-gray-900">Email:</strong>
+                  <span>{user?.email}</span>
+                </div>
+                {/* Bạn có thể thêm trường Địa chỉ vào DB sau này */}
+                <div className="flex items-start">
+                  <strong className="w-32 text-gray-900">Vai trò:</strong>
+                  <span className="capitalize">{user?.role}</span>
+                </div>
+              </div>
+            </div>
 
-              <a
-                href="tin-tuc.html"
-                className="text-center bg-green-700 text-white px-6 py-4 rounded-2xl shadow-md hover:bg-green-800 transition font-semibold text-lg"
+            {/* Nút điều hướng (Menu chức năng) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <Link
+                to="/account/history" // Đường dẫn tới trang lịch sử (cần tạo route này)
+                className="flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-4 rounded-xl shadow hover:bg-green-800 transition font-medium hover:-translate-y-1"
               >
-                Xem tin tức
-              </a>
+                <HistoryOutlined /> Lịch sử đặt vé
+              </Link>
 
-              <a
-                href="chuyen-di.html"
-                className="col-span-2 text-center bg-green-700 text-white px-6 py-4 rounded-2xl shadow-md hover:bg-green-800 transition font-semibold text-lg"
+              <button
+                onClick={handleLogout}
+                className="flex items-center justify-center gap-2 bg-red-600 text-white px-6 py-4 rounded-xl shadow hover:bg-red-700 transition font-medium hover:-translate-y-1 cursor-pointer"
               >
-                Chỉnh sửa thông tin cá nhân
-              </a>
+                <LogoutOutlined /> Đăng Xuất
+              </button>
+
+              <Link
+                to="/"
+                className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-4 rounded-xl shadow hover:bg-blue-700 transition font-medium hover:-translate-y-1"
+              >
+                <CarOutlined /> Đặt vé ngay
+              </Link>
+
+              <Link
+                to="/news"
+                className="flex items-center justify-center gap-2 bg-teal-600 text-white px-6 py-4 rounded-xl shadow hover:bg-teal-700 transition font-medium hover:-translate-y-1"
+              >
+                <ReadOutlined /> Xem tin tức
+              </Link>
+
+              <Link
+                to="/account/edit" // Đường dẫn tới trang sửa profile (cần tạo route này)
+                className="col-span-1 sm:col-span-2 flex items-center justify-center gap-2 bg-gray-700 text-white px-6 py-4 rounded-xl shadow hover:bg-gray-800 transition font-medium hover:-translate-y-1"
+              >
+                <EditOutlined /> Chỉnh sửa thông tin cá nhân
+              </Link>
             </div>
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-green-700 text-white">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-8 py-10 text-lg">
-          {/* Cột 1 */}
-          <div className="col-span-2 flex flex-col items-center space-y-6">
-            <img
-              src="https://gotickets.events/wp-content/uploads/2022/12/logo-gotickets.png"
-              alt="Logo"
-              className="w-62 invert"
-            />
-            <div className="flex space-x-6">
-              <a href="#" className="text-white hover:text-blue-500 text-3xl">
-                <i className="fa-brands fa-facebook"></i>
-              </a>
-              <a href="#" className="text-white hover:text-pink-500 text-3xl">
-                <i className="fa-brands fa-tiktok"></i>
-              </a>
-            </div>
-          </div>
-
-          {/* Cột 2 */}
-          <div className="col-span-3 space-y-4">
-            <h2 className="font-bold text-2xl text-yellow-400">
-              CÔNG TY TNHH GOTICKET
-            </h2>
-            <p>
-              <span className="text-yellow-400 mr-2">
-                <i className="fa-solid fa-location-dot"></i>
-              </span>
-              Khách sạn Thân Hoa, đường Mai Thúc Loan, Nghi Hương, TP Vinh, Nghệ
-              An.
-            </p>
-            <p>
-              <span className="text-yellow-400 mr-2">
-                <i className="fa-solid fa-phone"></i>
-              </span>
-              0365 252 737
-            </p>
-            <p>
-              <span className="text-yellow-400 mr-2">
-                <i className="fa-solid fa-phone"></i>
-              </span>
-              1900 6467 - 1900 6762
-            </p>
-          </div>
-
-          {/* Cột 3 */}
-          <div className="col-span-3 space-y-4">
-            <h2 className="font-bold text-2xl">Liên hệ với chúng tôi</h2>
-            <form className="flex flex-col space-y-3">
-              <input
-                type="text"
-                placeholder="Họ và tên"
-                className="px-4 py-2 rounded-md text-black bg-white"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="px-4 py-2 rounded-md text-black bg-white"
-              />
-              <input
-                type="text"
-                placeholder="Số điện thoại"
-                className="px-4 py-2 rounded-md text-black bg-white"
-              />
-              <textarea
-                placeholder="Lời nhắn đến Văn Minh"
-                className="px-4 py-2 rounded-md text-black bg-white"
-              ></textarea>
-              <button
-                type="submit"
-                className="bg-green-900 px-6 py-2 rounded-md hover:bg-green-600 transition"
-              >
-                Gửi
-              </button>
-            </form>
-          </div>
-
-          {/* Cột 4 */}
-          <div className="col-span-2">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18..."
-              width="100%"
-              height="250"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-md hover:scale-105 transition-transform"
-              title="Bản đồ"
-            ></iframe>
-          </div>
-
-          {/* Cột 5 */}
-          <div className="col-span-2 space-y-4">
-            <h2 className="font-bold text-2xl">Liên kết nhanh</h2>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="hover:text-yellow-400">
-                  Hệ thống văn phòng
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-yellow-400">
-                  Chính sách bảo mật
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-yellow-400">
-                  Điều khoản Văn Minh
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-yellow-400">
-                  Liên hệ
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
