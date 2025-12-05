@@ -13,7 +13,6 @@ const BookingPage = () => {
   const [openScheduleId, setOpenScheduleId] = useState<string | null>(null);
   useUnHoldOnBack();
   const { query } = useFilter();
-  console.log(query);
   const { pickPointId, dropPointId, ...otherQuery } = query;
   console.log(pickPointId, dropPointId);
   const { data: routeData } = useQuery({
@@ -48,13 +47,15 @@ const BookingPage = () => {
               {data?.data.length || 0} chuyến
             </span>
           </div>
-          <FilterBooking
-            initialValues={{
-              date: otherQuery.startTimeFrom,
-              dropPointId: dropPointId,
-              pickupPointId: pickPointId,
-            }}
-          />
+          {pickPointId && (
+            <FilterBooking
+              initialValues={{
+                date: otherQuery.startTimeFrom,
+                dropPointId: dropPointId,
+                pickupPointId: pickPointId,
+              }}
+            />
+          )}
         </div>
         {isLoading ? (
           <div className="flex justify-center items-center min-h-[60vh]">

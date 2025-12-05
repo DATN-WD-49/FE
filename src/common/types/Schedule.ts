@@ -1,5 +1,6 @@
 import type { ICar } from "./Car";
 import type { IRoute } from "./Route";
+import type { IUser } from "./User";
 
 export interface ICrew {
   userId: IUser | string;
@@ -27,6 +28,7 @@ export interface ISchedule {
   disableBy: "service" | "handle";
   createdAt: string;
   updatedAt: string;
+  bookedCount?: number;
 }
 
 export interface IScheduleCarIdRouteId extends Omit<ISchedule, "dayOfWeek"> {
