@@ -1,19 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button, DatePicker, Form, Select } from "antd";
 import dayjs from "dayjs";
-import { createSearchParams, useNavigate } from "react-router";
+import utc from "dayjs/plugin/utc";
+import { createSearchParams } from "react-router";
 import { QUERY_KEY } from "../../../common/contants/queryKey";
+import { useAuthNavigate } from "../../../common/hooks/useAuthNavigate";
 import { getPointRoute } from "../../../common/services/route.service";
 import type { IPointSelect } from "../../../common/types/Route";
 import { formRules } from "../../../common/utils/formRules";
-import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 const BookingSection = () => {
   const [form] = Form.useForm();
   const pickupPoint = Form.useWatch("pickupPoint", form);
   const dropPoint = Form.useWatch("dropPoint", form);
-  const nav = useNavigate();
+  const nav = useAuthNavigate();
   const { data: dataPick } = useQuery({
     queryKey: [QUERY_KEY.POINT.PICK],
     queryFn: () => getPointRoute(),
