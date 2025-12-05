@@ -10,6 +10,7 @@ import BookingPage from "../pages/booking/BookingPage";
 import News from "../pages/News/News";
 import VerifyUser from "../pages/auth/VerifyUser";
 import CheckoutPage from "../pages/checkout/CheckoutPage";
+import Profile from "../pages/profile/Profile";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -60,5 +61,9 @@ export const PublicRoute: RouteObject[] = [
   {
     path: "verify",
     element: <VerifyUser />,
+  },
+  {
+    path: "profile",
+    element: <Profile />,
   },
 ];
