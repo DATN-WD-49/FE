@@ -75,9 +75,6 @@ const ScheduleCard = ({
             </span>
           </p>
           <p className="text-gray-400">
-            Ngày xuất phát : {dayjs(schedule?.startTime).format("DD/MM/YYYY")}
-          </p>
-          <p className="text-gray-400">
             Thời gian dự kiến: {schedule?.routeId?.duration} giờ
           </p>
         </div>
