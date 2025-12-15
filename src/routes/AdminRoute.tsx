@@ -10,11 +10,17 @@ import UpdateRoute from "../pages/admin/route/update/UpdateRoute";
 import CreateRoute from "../pages/admin/route/CreateRoute";
 import ListSchedule from "../pages/admin/schedule/components/ListSchedule.tsx";
 import DetailSchedule from "../pages/admin/schedule/details/DetailSchedule.tsx";
+import AdminProtected from "../components/protected/AdminProtected.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
     path: "admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminProtected>
+        <AdminLayout />
+      </AdminProtected>
+    ),
+    // element: <AdminLayout />,
     children: [
       {
         index: true,

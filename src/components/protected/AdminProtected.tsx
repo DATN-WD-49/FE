@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { useAuthSelector } from "../../common/store";
 import { Navigate } from "react-router";
+import { useAuthSelector } from "../../common/store";
 
 const AdminProtected = ({ children }: { children: ReactNode }) => {
   const userRole = useAuthSelector((state) => state.user?.role);
