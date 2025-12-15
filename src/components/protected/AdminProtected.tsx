@@ -1,4 +1,3 @@
-
 import type { ReactNode } from "react";
 import { useAuthSelector } from "../../common/store";
 import { Navigate } from "react-router";
