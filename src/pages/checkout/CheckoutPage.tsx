@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { formatCurrency } from "../../common/utils";
 import { createOrderPayos } from "../../common/services/order.service";
 import { useToast } from "../../common/hooks/useToast";
+import { useAuthSelector } from "../../common/store";
 
 const CheckoutPage = () => {
   useUnHoldOnBack(true, false);
