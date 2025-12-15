@@ -1,18 +1,21 @@
-import { Button, Form, Input, Select, Spin, Tooltip } from "antd";
-import SeatMap from "./SeatMap";
 import {
   MailOutlined,
   PhoneOutlined,
   SendOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
-import { QUERY_KEY } from "../../common/constans/queryKey";
-import { getSeatMapSchedule } from "../../common/services/seat.schedule.service";
-import { useAuthSelector } from "../../common/store";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Button, Form, Input, Select, Spin, Tooltip } from "antd";
 import { useNavigate } from "react-router";
-import type { ISchedule } from "../../common/types/Schedule";
+import SeatMap from "./SeatMap";
+import { useAuthSelector } from "../../common/store";
 import { formatCurrency } from "../../common/utils";
+import type { ISchedule } from "../../common/types/Schedule";
+import {
+  extendHoldSeat,
+  getSeatMapSchedule,
+} from "../../common/services/seat.schedule.service";
+import { QUERY_KEY } from "../../common/constans/queryKey";
 import { useCheckoutSelector } from "../../common/store/useCheckoutStore";
 
 const seatStatuses = [
@@ -35,12 +38,13 @@ const SeatPickSection = ({
   );
   const userId = useAuthSelector((state) => state.user?._id);
   const nav = useNavigate();
+
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.SEAT.ROOT, carId, schedule._id],
     queryFn: async () => getSeatMapSchedule(carId, schedule._id),
   });
-  const hasHeldSeat = data?.data.some((itemt) =>
-    itemt.seats.some(
+  const hasHeldSeat = data?.data.some((item) =>
+    item.seats.some(
       (seat) => seat.userId === userId && seat.bookingStatus === "hold",
     ),
   );
@@ -48,7 +52,10 @@ const SeatPickSection = ({
   const holdSeat = allSeats.filter(
     (seat) => seat.bookingStatus === "hold" && seat.userId === userId,
   );
-
+  const extendHoldMutation = useMutation({
+    mutationFn: (seatIds: string[]) =>
+      extendHoldSeat(schedule._id as string, seatIds),
+  });
   const onSubmit = (values: any) => {
     if (!hasHeldSeat) return;
     const payload = {
@@ -79,7 +86,7 @@ const SeatPickSection = ({
           <div className="flex items-start gap-16 justify-center">
             {data?.data.map((item, index) => (
               <div key={index} className=" flex flex-col gap-4 items-center">
-                <p className="text-center font-semibold">{item.floor}</p>
+                <p className="text-center font-semibold">Tầng {item.floor}</p>
                 <SeatMap floor={item} scheduleId={schedule._id} />
               </div>
             ))}
@@ -190,12 +197,10 @@ const SeatPickSection = ({
           >
             <Select
               showSearch
-              style={{
-                height: 45,
-              }}
+              style={{ height: 45 }}
               prefix={<SendOutlined className="mr-2 -rotate-45" />}
               className="custom-select w-full"
-              placeholder="Chọn điểm đón"
+              placeholder="Điểm đón"
               optionFilterProp="children"
             >
               {schedule.routeId.pickupPoint.district.map((item) => (
@@ -220,17 +225,15 @@ const SeatPickSection = ({
           >
             <Select
               showSearch
-              style={{
-                height: 45,
-              }}
+              style={{ height: 45 }}
               prefix={<SendOutlined className="mr-2 -rotate-45" />}
               className="custom-select w-full"
-              placeholder="Chọn điểm trả"
+              placeholder="Điểm đến"
               optionFilterProp="children"
             >
               {schedule.routeId.dropPoint.district.map((item) => (
                 <Select.OptGroup
-                  label={`${item.label} - ${schedule.routeId.pickupPoint.label}`}
+                  label={`${item.label} - ${schedule.routeId.dropPoint.label}`}
                 >
                   {item.description.map((description) => (
                     <Select.Option
@@ -247,8 +250,9 @@ const SeatPickSection = ({
           <Form.Item>
             <Button
               htmlType="submit"
-              disabled={!hasHeldSeat}
               type="primary"
+              disabled={!hasHeldSeat || extendHoldMutation.isPending}
+              loading={extendHoldMutation.isPending}
               style={{
                 background: "#0c7d41",
                 width: "100%",
