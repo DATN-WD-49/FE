@@ -5,7 +5,10 @@ import { unHoldSeat } from "../services/seat.schedule.service";
 import { getSocket } from "../../socket/socket-client";
 import { useAuthSelector } from "../store";
 
-export const useUnHoldOnBack = (enableBlockPop: boolean = true) => {
+export const useUnHoldOnBack = (
+  enableBlockPop: boolean = true,
+  enableCloseTabEmit: boolean = true,
+) => {
   const queryClient = useQueryClient();
   const nav = useNavigate();
   const handled = useRef(false);
@@ -43,10 +46,13 @@ export const useUnHoldOnBack = (enableBlockPop: boolean = true) => {
       window.addEventListener("popstate", handlePopState);
     }
 
-    const handlePageHide = () => {
-      socket.emit("closeTabCheckout", { userId });
-    };
-    window.addEventListener("pagehide", handlePageHide);
+    let handlePageHide = null;
+    if (enableCloseTabEmit) {
+      handlePageHide = () => {
+        socket.emit("closeTabCheckout", { userId });
+      };
+      window.addEventListener("pagehide", handlePageHide);
+    }
 
     // Đẩy state để tránh rời trang
     window.history.pushState(null, "", window.location.href);
@@ -55,7 +61,9 @@ export const useUnHoldOnBack = (enableBlockPop: boolean = true) => {
       if (handlePopState) {
         window.removeEventListener("popstate", handlePopState);
       }
-      window.removeEventListener("pagehide", handlePageHide);
+      if (handlePageHide) {
+        window.removeEventListener("pagehide", handlePageHide);
+      }
     };
   }, [enableBlockPop, socket, nav, mutate, userId]);
 };
