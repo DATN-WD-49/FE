@@ -56,7 +56,7 @@ const SeatPickSection = ({
     mutationFn: (seatIds: string[]) =>
       extendHoldSeat(schedule._id as string, seatIds),
   });
-  const onSubmit = async (values: any) => {
+  const onSubmit = (values: any) => {
     if (!hasHeldSeat) return;
     const payload = {
       seat: holdSeat,
@@ -73,10 +73,8 @@ const SeatPickSection = ({
       dropPoint: values.dropPoint,
     };
     setInfomationCheckout(payload);
-    await extendHoldMutation.mutateAsync(holdSeat.map((item) => item._id));
     nav(`/checkout/${schedule._id}`);
   };
-
   return (
     <div className="mt-2 bg-white w-full p-4 rounded-lg shadow-md flex gap-6">
       <div className="w-[70%] bg-gray-100 py-6 rounded-lg px-6">
