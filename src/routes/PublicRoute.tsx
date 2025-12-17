@@ -11,6 +11,8 @@ import News from "../pages/News/News";
 import VerifyUser from "../pages/auth/VerifyUser";
 import CheckoutPage from "../pages/checkout/CheckoutPage";
 import Profile from "../pages/profile/Profile";
+import ProfilePage from "../pages/profile/ProfilePage";
+import ProfileIndex from "../pages/profile/ProfileIndex";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -32,6 +34,16 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "news",
         element: <News />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+        children: [
+          {
+            index: true,
+            element: <ProfileIndex />,
+          },
+        ],
       },
     ],
   },
