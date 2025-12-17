@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
-import { QUERY_KEY } from "../../common/constants/queryKey";
 import { useToast } from "../../common/hooks/useToast";
 import { getProfile, updateUser } from "../../common/services/user.service";
 import type { IUser } from "../../common/types/User";
@@ -9,6 +8,7 @@ import { formRules } from "../../common/utils/formRules";
 import { uploadImage } from "../../common/utils/upload";
 import UploadImage from "../../components/common/UploadImage";
 import ActionBox from "./components/ActionBox";
+import { QUERY_KEY } from "../../common/constans/queryKey";
 
 const ProfileIndex = () => {
   const [form] = Form.useForm();
