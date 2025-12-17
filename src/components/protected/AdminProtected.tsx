@@ -1,14 +1,13 @@
-import React, { type ReactNode } from 'react'
-import { useAuthSelector } from '../../common/store';
-import { Navigate } from 'react-router';
+import React, { type ReactNode } from "react";
+import { useAuthSelector } from "../../common/store";
+import { Navigate } from "react-router";
 
 const AdminProtected = ({ children }: { children: ReactNode }) => {
-    const userRole = useAuthSelector((state) => state.user?.role);
+  const userRole = useAuthSelector((state) => state.user?.role);
 
   if (!userRole) return <Navigate to={"/"} />;
   if (userRole !== "admin") return <Navigate to={"/"} />;
   return children;
+};
 
-}
-
-export default AdminProtected
+export default AdminProtected;

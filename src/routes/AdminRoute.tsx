@@ -11,6 +11,8 @@ import CreateRoute from "../pages/admin/route/CreateRoute";
 import ListSchedule from "../pages/admin/schedule/components/ListSchedule.tsx";
 import DetailSchedule from "../pages/admin/schedule/details/DetailSchedule.tsx";
 import AdminProtected from "../components/protected/AdminProtected.tsx";
+import ListTicket from "../pages/admin/ticket/ListTicket.tsx";
+import ScanTicket from "../pages/admin/ticket/scan/ScanTicket.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -74,6 +76,19 @@ export const AdminRoute: RouteObject[] = [
           {
             path: "show/:carId/:routeId",
             element: <DetailSchedule />,
+          },
+        ],
+      },
+      {
+        path: "ticket",
+        children: [
+          {
+            index: true,
+            element: <ListTicket />,
+          },
+          {
+            path: "scan",
+            element: <ScanTicket />,
           },
         ],
       },
