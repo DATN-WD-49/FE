@@ -15,7 +15,7 @@ const ActionBox = () => {
     logout();
   };
   return (
-    <div className="shadow-lg rounded-md p-6">
+    <div className="shadow-lg rounded-md p-6 mb-12">
       <p className="mt-2 text-lg font-semibold mb-4">Tài khoản</p>
       <div className="relative flex items-start gap-4 overflow-hidden rounded-md group cursor-pointer">
         <div className="absolute inset-0 bg-[#b6dbfc] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-0" />
