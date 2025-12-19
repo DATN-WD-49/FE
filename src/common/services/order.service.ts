@@ -17,3 +17,17 @@ export const getAllOrder = async (
   const { data } = await api.get(`${prefix}`, { params });
   return data;
 };
+
+export const getMyOrder = async (
+  params?: IParams,
+): Promise<IResponse<IOrder[]>> => {
+  const { data } = await api.get(`${prefix}/my-order`, { params });
+  return data;
+};
+
+export const getDetailOrder = async (
+  id: string,
+): Promise<IResponse<IOrder>> => {
+  const { data } = await api.get(`${prefix}/detail/${id}`);
+  return data;
+};
