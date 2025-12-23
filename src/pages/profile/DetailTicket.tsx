@@ -136,7 +136,7 @@ const DetailTicket = () => {
                   </p>
                 </div>
                 <button className="rounded-lg mt-4 bg-green-700 px-6 py-2 font-medium text-white hover:bg-blue-700 cursor-pointer">
-                  Tải Vé PDF
+                  Tải Vé Xuống
                 </button>
               </div>
             </div>
