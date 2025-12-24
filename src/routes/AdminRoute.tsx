@@ -88,14 +88,14 @@ export const AdminRoute: RouteObject[] = [
             element: <ListTicket />,
           },
           {
+            path: "detail/:id",
+            element: <DetailAdminTicket />,
+          },
+          {
             path: "scan",
             element: <ScanTicket />,
           },
         ],
-      },
-      {
-        path: "detail/:id",
-        element: <DetailAdminTicket />,
       },
     ],
   },
