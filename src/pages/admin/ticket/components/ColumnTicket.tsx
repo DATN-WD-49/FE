@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { Link } from "react-router";
 import { EyeOutlined } from "@ant-design/icons";
 
-
 const renderStatus = (status: OrderStatus) => {
   switch (status) {
     case "BUYED":
@@ -73,7 +72,7 @@ export const columnTicket = (
         );
       },
     },
-    
+
     {
       title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Tổng tiền</p>,
       dataIndex: "totalPrice",
@@ -110,7 +109,7 @@ export const columnTicket = (
       render: (_: any, record: IOrder) => (
         <Space style={{ display: "flex", gap: 12 }}>
           <Tooltip title="Xem chi tiết vé">
-            <Link to={`/admin/ticket/${record._id}`}>
+            <Link to={`/admin/ticket/detail/${record._id}`}>
               <EyeOutlined style={{ cursor: "pointer", fontSize: 18 }} />
             </Link>
           </Tooltip>
