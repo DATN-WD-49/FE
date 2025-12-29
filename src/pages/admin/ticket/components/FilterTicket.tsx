@@ -2,7 +2,6 @@ import { Input, Select } from "antd";
 import { useTable } from "../../../../common/hooks/useTable";
 import dayjs from "dayjs";
 
-
 const FilterTicket = () => {
   const { query, onFilter } = useTable();
   return (

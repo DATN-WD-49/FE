@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { Link } from "react-router";
 import { EyeOutlined } from "@ant-design/icons";
 
-
 const renderStatus = (status: OrderStatus) => {
   switch (status) {
     case "BUYED":
@@ -73,7 +72,7 @@ export const columnTicket = (
         );
       },
     },
-    
+
     {
       title: <p style={{ whiteSpace: "nowrap", margin: 0 }}>Tổng tiền</p>,
       dataIndex: "totalPrice",

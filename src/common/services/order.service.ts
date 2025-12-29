@@ -31,3 +31,7 @@ export const getDetailOrder = async (
   const { data } = await api.get(`${prefix}/detail/${id}`);
   return data;
 };
+export const verifyOrder = async (id: string) => {
+  const { data } = await api.patch(`${prefix}/verify/${id}`);
+  return data;
+};
