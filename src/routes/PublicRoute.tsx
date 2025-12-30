@@ -1,20 +1,19 @@
 import type { RouteObject } from "react-router";
-import MainLayout from "../components/layouts/MainLayout";
-import HomePage from "../pages/home/HomePage";
-import LoginPage from "../pages/auth/login/LoginPage";
 import AuthLayout from "../components/layouts/AuthLayout";
+import MainLayout from "../components/layouts/MainLayout";
 import ForgetpassPage from "../pages/auth/forgetpass/ForgetpassPage";
-import RegisterPage from "../pages/auth/register/RegisterPage";
 import LoginGooglePage from "../pages/auth/login/LoginGooglePage";
-import BookingPage from "../pages/booking/BookingPage";
-import News from "../pages/News/News";
+import LoginPage from "../pages/auth/login/LoginPage";
+import RegisterPage from "../pages/auth/register/RegisterPage";
 import VerifyUser from "../pages/auth/VerifyUser";
+import BookingPage from "../pages/booking/BookingPage";
 import CheckoutPage from "../pages/checkout/CheckoutPage";
-import Profile from "../pages/profile/Profile";
-import ProfilePage from "../pages/profile/ProfilePage";
-import ProfileIndex from "../pages/profile/ProfileIndex";
-import ListMyTicket from "../pages/profile/ListMyTicket";
+import HomePage from "../pages/home/HomePage";
+import News from "../pages/News/News";
 import DetailTicket from "../pages/profile/DetailTicket";
+import ListMyTicket from "../pages/profile/ListMyTicket";
+import ProfileIndex from "../pages/profile/ProfileIndex";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -45,7 +44,15 @@ export const PublicRoute: RouteObject[] = [
             index: true,
             element: <ProfileIndex />,
           },
+          {
+            path: "my-ticket",
+            element: <ListMyTicket />,
+          },
         ],
+      },
+      {
+        path: "profile/my-ticket/:id",
+        element: <DetailTicket />,
       },
     ],
   },
@@ -75,17 +82,5 @@ export const PublicRoute: RouteObject[] = [
   {
     path: "verify",
     element: <VerifyUser />,
-  },
-  {
-    path: "profile",
-    element: <Profile />,
-  },
-  {
-    path: "/profile/my-ticket",
-    element: <ListMyTicket />,
-  },
-  {
-    path: "/profile/my-ticket/:id",
-    element: <DetailTicket />,
   },
 ];
