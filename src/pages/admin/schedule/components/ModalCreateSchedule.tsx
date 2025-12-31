@@ -1,4 +1,6 @@
 import React, {
+  useEffect,
+  useMemo,
   useState,
   type ReactElement,
   type MouseEventHandler,
@@ -86,6 +88,7 @@ const ModalCreateSchedule = ({ children }: { children: ReactElement }) => {
   const cars = carData?.data || [];
   const routes = routeData?.data || [];
   const startDate = Form.useWatch("startTime", form);
+  const endDate = Form.useWatch("untilTime", form);
   const driver = Form.useWatch(["crew", 0, "userId"], form);
   const assistant = Form.useWatch(["crew", 1, "userId"], form);
   const handleSubmit = async () => {
@@ -106,6 +109,39 @@ const ModalCreateSchedule = ({ children }: { children: ReactElement }) => {
       mutate({ ...res, crew, startTime, untilTime, fixedHour });
     });
   };
+  const getValidDaysOfWeek = (
+    start?: dayjs.Dayjs,
+    end?: dayjs.Dayjs,
+  ): number[] => {
+    if (!start || !end) return [];
+    const startDay = start.day();
+    const diffDays = end.startOf("day").diff(start.startOf("day"), "day");
+    if (diffDays < 0) return [];
+    if (diffDays >= 6) {
+      return [0, 1, 2, 3, 4, 5, 6];
+    }
+
+    const days = new Set<number>();
+    for (let i = 0; i <= diffDays; i++) {
+      days.add((startDay + i) % 7);
+    }
+
+    return Array.from(days);
+  };
+
+  const validDays = useMemo(
+    () => getValidDaysOfWeek(startDate, endDate),
+    [startDate, endDate],
+  );
+  useEffect(() => {
+    const selectedDays: number[] = form.getFieldValue("dayOfWeek") || [];
+
+    const filtered = selectedDays.filter((d) => validDays.includes(d));
+
+    if (filtered.length !== selectedDays.length) {
+      form.setFieldValue("dayOfWeek", filtered);
+    }
+  }, [validDays]);
   return (
     <>
       {children &&
@@ -288,7 +324,11 @@ const ModalCreateSchedule = ({ children }: { children: ReactElement }) => {
             <Form.Item
               required
               label="Chọn ngày trong tuần"
-              name={"dayOfWeek"}
+              disabled={!startDate || !endDate}
+              options={DAYOFWEEK_OPTIONS.map((opt) => ({
+                ...opt,
+                disabled: !validDays.includes(opt.value),
+              }))}
               className="flex-1"
               rules={[formRules.required("Ngày trong tuần", true)]}
             >
@@ -299,9 +339,6 @@ const ModalCreateSchedule = ({ children }: { children: ReactElement }) => {
                 options={DAYOFWEEK_OPTIONS}
                 maxTagCount="responsive"
                 allowClear
-                maxTagPlaceholder={(omittedValues) =>
-                  `+${omittedValues.length} ...`
-                }
               />
             </Form.Item>
           </div>
