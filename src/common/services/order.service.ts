@@ -35,3 +35,8 @@ export const verifyOrder = async (id: string) => {
   const { data } = await api.patch(`${prefix}/verfiry/${id}`);
   return data;
 };
+
+export const confirmOrder = async (id: string): Promise<IResponse<IOrder>> => {
+  const { data } = await api.patch(`${prefix}/confirm/${id}`);
+  return data;
+};
