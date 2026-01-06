@@ -14,9 +14,7 @@ import DetailTicket from "../pages/profile/DetailTicket";
 import ListMyTicket from "../pages/profile/ListMyTicket";
 import ProfileIndex from "../pages/profile/ProfileIndex";
 import ProfilePage from "../pages/profile/ProfilePage";
-import MyTicketPage from "../pages/my-ticket/MyTicketPage";
-import PaymentSuccessPage from "../pages/checkout/PaymentSuccessPage";
-import PaymentFailedPage from "../pages/checkout/PaymentFailedPage";
+import PaymentSuccess from "../pages/checkout/Checoutsuccess";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -97,5 +95,9 @@ export const PublicRoute: RouteObject[] = [
   {
     path: "verify",
     element: <VerifyUser />,
+  },
+  {
+    path: "payment/success/:id",
+    element: <PaymentSuccess />,
   },
 ];
