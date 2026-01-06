@@ -324,6 +324,7 @@ const ModalCreateSchedule = ({ children }: { children: ReactElement }) => {
             <Form.Item
               required
               label="Chọn ngày trong tuần"
+              name="dayOfWeek"
               disabled={!startDate || !endDate}
               options={DAYOFWEEK_OPTIONS.map((opt) => ({
                 ...opt,
