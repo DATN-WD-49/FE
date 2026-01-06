@@ -1,10 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useNavigate, useParams } from "react-router";
+import { QUERY_KEY } from "../../common/contants/queryKey";
+import { getDetailOrder } from "../../common/services/order.service";
+import { formatCurrency } from "../../common/utils";
 
 const PaymentSuccess: React.FC = () => {
-  // 👉 Sau này bạn có thể lấy từ API / query param
-  const orderCode = "CSI6E6MY330";
-  const amount = 100000;
-
+  const { id } = useParams();
+  const nav = useNavigate();
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY.ORDER.ROOT, id],
+    queryFn: () => getDetailOrder(id as string),
+  });
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center p-8">
       <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full p-12 text-center">
@@ -38,10 +45,10 @@ const PaymentSuccess: React.FC = () => {
 
         {/* Order info */}
         <div className="bg-gray-50 rounded-2xl p-6 text-left space-y-4 mb-8 text-lg">
-          <InfoRow label="Mã đơn hàng" value={orderCode} />
+          <InfoRow label="Mã đơn hàng" value={data?.data._id as string} />
           <InfoRow
             label="Số tiền"
-            value={`${amount.toLocaleString()} VNĐ`}
+            value={`${formatCurrency(data?.data?.totalPrice || 0)}`}
             highlight
           />
           <InfoRow label="Phương thức" value="PayOS / Chuyển khoản" />
@@ -51,14 +58,14 @@ const PaymentSuccess: React.FC = () => {
         {/* Actions */}
         <div className="space-y-4">
           <button
-            onClick={() => (window.location.href = "/profile/my-ticket")}
+            onClick={() => nav(`/profile/my-ticket/${id}`)}
             className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl text-lg transition"
           >
             🎫 Xem vé của tôi
           </button>
 
           <button
-            onClick={() => (window.location.href = "/HomePage")}
+            onClick={() => nav("/")}
             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-4 rounded-2xl text-lg transition"
           >
             ⬅️ Về trang chủ
