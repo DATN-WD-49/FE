@@ -34,6 +34,18 @@ export const PublicRoute: RouteObject[] = [
         element: <CheckoutPage />,
       },
       {
+        path: "payment-success",
+        element: <PaymentSuccessPage />,
+      },
+      {
+        path: "payment-failed",
+        element: <PaymentFailedPage />,
+      },
+      {
+        path: "my-tickets",
+        element: <MyTicketPage />,
+      },
+      {
         path: "news",
         element: <News />,
       },
