@@ -14,6 +14,7 @@ import AdminProtected from "../components/protected/AdminProtected.tsx";
 import ListTicket from "../pages/admin/ticket/ListTicket.tsx";
 import ScanTicket from "../pages/admin/ticket/scan/ScanTicket.tsx";
 import DetailAdminTicket from "../pages/admin/ticket/detail/DetailAdminTicket.tsx";
+import UserManagement from "../pages/admin/user/UserManagement.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -96,6 +97,10 @@ export const AdminRoute: RouteObject[] = [
             element: <ScanTicket />,
           },
         ],
+      },
+      {
+        path: "users",
+        element: <UserManagement />,
       },
     ],
   },
