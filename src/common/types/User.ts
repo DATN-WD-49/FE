@@ -1,4 +1,5 @@
 export interface IUser {
+  lockUntil?: string;
   _id: string;
   userName: string;
   avatar: string;
@@ -11,5 +12,7 @@ export interface IUser {
   isVerified: boolean;
   provider: string[];
   updatedAt: string;
+  status?: string;
+  accountType?: string;
 }
 export type UserRole = "user" | "staff" | "admin";
