@@ -24,13 +24,10 @@ const { Title } = Typography;
 
 const UserManagement = () => {
   const [searchText, setSearchText] = useState("");
-
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
-
   const [isLocked, setIsLocked] = useState(false);
 
   const [form] = Form.useForm();
@@ -50,7 +47,8 @@ const UserManagement = () => {
       const updateData = {
         role: values.role,
         status: values.isLocked ? "locked" : "active",
-        lockUntil: values.isLocked ? values.lockUntil : null,
+        lockUntil:
+          values.isLocked && values.lockUntil ? values.lockUntil : null,
       };
 
       return updateUser(editingUser._id, updateData);
@@ -66,10 +64,8 @@ const UserManagement = () => {
     },
   });
 
-  // Hàm mở Modal
   const onEdit = (user: IUser) => {
     setEditingUser(user);
-
     const userIsLocked = user.status === "locked";
     setIsLocked(userIsLocked);
 
@@ -83,7 +79,6 @@ const UserManagement = () => {
     setIsModalOpen(true);
   };
 
-  // Hàm lưu
   const onSave = () => {
     form.validateFields().then((values) => {
       handleUpdate(values);
@@ -296,21 +291,15 @@ const UserManagement = () => {
               {isLocked && (
                 <Form.Item
                   name="lockUntil"
-                  label="Khóa đến ngày"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Vui lòng chọn ngày mở khóa!",
-                    },
-                  ]}
-                  help="Sau ngày này tài khoản sẽ tự động mở lại."
+                  label="Thời hạn khóa (Tùy chọn)"
+                  help="Để trống = Khóa vĩnh viễn (cho đến khi mở lại thủ công)."
                 >
                   <DatePicker
                     className="w-full"
                     size="large"
                     showTime
                     format="DD/MM/YYYY HH:mm"
-                    placeholder="Chọn thời gian mở khóa"
+                    placeholder="Chọn ngày tự động mở (hoặc để trống)"
                   />
                 </Form.Item>
               )}
