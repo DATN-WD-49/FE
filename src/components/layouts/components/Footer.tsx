@@ -69,7 +69,7 @@ const Footer = () => {
                   className="px-4 py-2 rounded-md text-black bg-white"
                 />
                 <textarea
-                  placeholder="Lời nhắn đến Văn Minh"
+                  placeholder="Lời nhắn đến chúng tôi"
                   className="px-4 py-2 rounded-md text-black bg-white"
                 ></textarea>
                 <button
@@ -111,7 +111,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="#" className="hover:text-yellow-400">
-                    Điều khoản Văn Minh
+                    Điều khoản
                   </a>
                 </li>
                 <li>

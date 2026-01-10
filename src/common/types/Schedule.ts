@@ -1,7 +1,3 @@
-import type { ICar } from "./Car";
-import type { IRoute } from "./Route";
-import type { IUser } from "./User";
-
 export interface ICrew {
   userId: IUser | string;
   role: "driver" | "assistant";
@@ -28,20 +24,13 @@ export interface ISchedule {
   disableBy: "service" | "handle";
   createdAt: string;
   updatedAt: string;
-  bookedCount?: number;
 }
 
 export interface IScheduleCarIdRouteId extends Omit<ISchedule, "dayOfWeek"> {
+  statusCount: any;
   count: number;
   inActiveCount: number;
   activeCount: number;
-  statusCount: {
-    pending: number;
-    confirmed: number;
-    running: number;
-    completed: number;
-    cancelled: number;
-  };
   dayOfWeek: number[];
 }
 
