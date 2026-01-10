@@ -4,6 +4,7 @@ import {
   CarOutlined,
   ClusterOutlined,
   LineChartOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import type { JSX } from "react";
 export type IChildrenItem = {
@@ -22,7 +23,12 @@ export const menuGroups: IMenuItem[] = [
   {
     icon: <LineChartOutlined />,
     label: "Thống kê",
-    route: "/admin",
+    route: "/admin/overview",
+  },
+  {
+    icon: <UserOutlined />,
+    label: "Quản lý người dùng",
+    route: "/admin/users",
   },
   {
     icon: <CarOutlined />,
