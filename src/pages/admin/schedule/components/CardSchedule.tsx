@@ -52,7 +52,7 @@ const CardSchedule = ({ item }: { item: IScheduleCarIdRouteId }) => {
 
       <div>
         <p className="text-gray-700/60">Trạng thái lịch chạy:</p>
-        <p className="text-xs">Licchj chưa chạy{item.statusCount.pending}</p>
+        <p className="text-xs">Lịch chưa chạy{item.statusCount.pending}</p>
         <p className="text-xs">
           Lịch chạy hoàn thành {item.statusCount.cancelled}
         </p>
