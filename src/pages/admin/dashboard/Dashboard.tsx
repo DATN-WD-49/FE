@@ -1,12 +1,19 @@
-import { Card, Col, Row, Table } from "antd";
+import { Card, Col, DatePicker, Row, Space, Table } from "antd";
+import { useState } from "react";
+import type { ReactNode } from "react";
+import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
 import {
   CarOutlined,
   EnvironmentOutlined,
   ScheduleOutlined,
-  TicketOutlined,
   DollarOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
-import { Line, Column } from "@ant-design/plots";
+import Line from "@ant-design/plots/es/line";
+import Column from "@ant-design/plots/es/column";
+
+const { RangePicker } = DatePicker;
 
 function Dashboard() {
   const ticketsData = [
@@ -23,9 +30,22 @@ function Dashboard() {
     { route: "HN - TB", revenue: 12000000 },
     { route: "HN - NB", revenue: 8500000 },
   ];
+  const [dateRange, setDateRange] = useState<
+    [Dayjs | null, Dayjs | null] | null
+  >(null);
+
+  const filteredTicketsData = dateRange
+    ? ticketsData.filter((item) => {
+        const d = dayjs(item.date);
+        return (
+          d.isAfter(dateRange[0]!.startOf("day")) &&
+          d.isBefore(dateRange[1]!.endOf("day"))
+        );
+      })
+    : ticketsData;
 
   const lineConfig = {
-    data: ticketsData,
+    data: filteredTicketsData,
     xField: "date",
     yField: "total",
     smooth: true,
@@ -54,7 +74,7 @@ function Dashboard() {
           <StatCard title="Lịch chạy" value="48" icon={<ScheduleOutlined />} />
         </Col>
         <Col span={4}>
-          <StatCard title="Vé đã bán" value="420" icon={<TicketOutlined />} />
+          <StatCard title="Vé đã bán" value="420" icon={<FileTextOutlined />} />
         </Col>
         <Col span={8}>
           <StatCard
@@ -64,6 +84,10 @@ function Dashboard() {
           />
         </Col>
       </Row>
+      <Space style={{ margin: "24px 0" }}>
+        <span>Lọc theo thời gian:</span>
+        <RangePicker onChange={(values) => setDateRange(values)} />
+      </Space>
 
       <Row gutter={16} style={{ marginTop: 24 }}>
         <Col span={12}>
@@ -104,7 +128,7 @@ function StatCard({
 }: {
   title: string;
   value: string | number;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) {
   return (
     <Card>
