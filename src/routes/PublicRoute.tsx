@@ -102,4 +102,8 @@ export const PublicRoute: RouteObject[] = [
     path: "payment/success/:id",
     element: <PaymentSuccess />,
   },
+  {
+    path: "payment/failed/:id",
+    element: <PaymentFailed />,
+  },
 ];
