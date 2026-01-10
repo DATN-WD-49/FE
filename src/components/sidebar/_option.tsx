@@ -23,7 +23,7 @@ export const menuGroups: IMenuItem[] = [
   {
     icon: <LineChartOutlined />,
     label: "Thống kê",
-    route: "/admin",
+    route: "/admin/overview",
   },
   {
     icon: <UserOutlined />,
