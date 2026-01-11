@@ -6,8 +6,8 @@ import "swiper/swiper-bundle.css";
 import { useRef, useState } from "react";
 
 const images = [
-  "https://vanminh76.vn/wp-content/uploads/2024/03/D.png",
-  "https://vanminh76.vn/wp-content/uploads/2024/03/D.png",
+  "public/b8da8caa-ac58-4c2d-9bad-820d56b12e2c.png",
+  "public/b8da8caa-ac58-4c2d-9bad-820d56b12e2c.png",
 ];
 
 const Banner = () => {
