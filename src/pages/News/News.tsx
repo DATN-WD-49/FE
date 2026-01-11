@@ -28,19 +28,19 @@ const News = () => {
 
         <p className="text-gray-700 mb-4">
           Là kim chỉ nam được Ban Giám đốc{" "}
-          <span className="font-semibold text-green-700">GoTicket</span> xây
-          dựng và gìn giữ trong suốt quá trình hình thành và phát triển. Trải
-          qua gần 17 năm hoạt động, chúng tôi không ngừng đổi mới, sáng tạo và
-          từng bước khẳng định vị thế của mình trong lĩnh vực vận tải hành khách
-          – mang đến những hành trình an toàn, tiện nghi và đáng tin cậy cho mọi
-          khách hàng.
+          <span className="font-semibold text-green-700">GoTicket Poly</span>{" "}
+          xây dựng và gìn giữ trong suốt quá trình hình thành và phát triển.
+          Trải qua gần 17 năm hoạt động, chúng tôi không ngừng đổi mới, sáng tạo
+          và từng bước khẳng định vị thế của mình trong lĩnh vực vận tải hành
+          khách – mang đến những hành trình an toàn, tiện nghi và đáng tin cậy
+          cho mọi khách hàng.
         </p>
 
         <p className="text-gray-700 mb-4">
           Với tinh thần dám nghĩ, dám làm và nỗ lực không ngừng nghỉ, GoTicket
-          ngày càng khẳng định vị thế là thương hiệu vận tải uy tín hàng đầu tại
-          Việt Nam, nơi mỗi chuyến xe không chỉ là phương tiện di chuyển, mà còn
-          là hành trình của niềm tin, chất lượng và sự tận tâm.
+          Poly ngày càng khẳng định vị thế là thương hiệu vận tải uy tín hàng
+          đầu tại Việt Nam, nơi mỗi chuyến xe không chỉ là phương tiện di
+          chuyển, mà còn là hành trình của niềm tin, chất lượng và sự tận tâm.
         </p>
 
         <p className="text-gray-700 mb-6">
@@ -68,14 +68,15 @@ const News = () => {
 
         <p className="mb-6 text-gray-700">
           Ngày <span className="italic">[cập nhật ngày khai trương]</span>,{" "}
-          <span className="font-semibold text-black">GoTicket</span> chính thức
-          ra mắt và đi vào hoạt động, đánh dấu một bước tiến quan trọng trong
-          lĩnh vực vận tải hành khách chất lượng cao tại Việt Nam. Với sứ mệnh{" "}
+          <span className="font-semibold text-black">GoTicket Poly</span> chính
+          thức ra mắt và đi vào hoạt động, đánh dấu một bước tiến quan trọng
+          trong lĩnh vực vận tải hành khách chất lượng cao tại Việt Nam. Với sứ
+          mệnh{" "}
           <span className="italic">
             “Kết nối hành trình – Nâng tầm trải nghiệm”
           </span>
-          , GoTicket hướng đến xây dựng hệ sinh thái di chuyển thông minh, an
-          toàn và tiện lợi cho mọi người dân.
+          , GoTicket Poly hướng đến xây dựng hệ sinh thái di chuyển thông minh,
+          an toàn và tiện lợi cho mọi người dân.
         </p>
 
         <h2 className="text-xl font-semibold mb-2 flex items-center">
@@ -93,7 +94,7 @@ const News = () => {
         />
 
         <p className="mb-4 text-gray-700">
-          GoTicket tiên phong ứng dụng{" "}
+          GoTicket Poly tiên phong ứng dụng{" "}
           <span className="font-medium">
             công nghệ đặt vé trực tuyến thông minh
           </span>
@@ -134,8 +135,8 @@ const News = () => {
         />
 
         <p className="mb-4 text-gray-700">
-          An toàn luôn là ưu tiên hàng đầu của GoTicket. Tất cả các phương tiện
-          đều được <span className="font-medium">kiểm định định kỳ</span>,{" "}
+          An toàn luôn là ưu tiên hàng đầu của GoTicket Poly. Tất cả các phương
+          tiện đều được <span className="font-medium">kiểm định định kỳ</span>,{" "}
           <span className="font-medium">bảo trì chuẩn quy trình</span>, và được
           trang bị{" "}
           <span className="font-medium">
@@ -145,7 +146,7 @@ const News = () => {
         </p>
 
         <p className="mb-6 text-gray-700">
-          Đội ngũ tài xế của GoTicket được{" "}
+          Đội ngũ tài xế của GoTicket Poly được{" "}
           <span className="font-medium">đào tạo bài bản</span> về kỹ năng lái xe
           an toàn, xử lý tình huống và chăm sóc khách hàng, mang đến cho hành
           khách những chuyến đi{" "}
@@ -175,8 +176,8 @@ const News = () => {
 
         <div className="border-t border-gray-200 pt-6 mt-6 text-center">
           <p className="text-lg font-semibold text-green-700 mb-3">
-            GoTicket – Công nghệ tiên phong, an toàn vững bước, kết nối mọi hành
-            trình!
+            GoTicket Poly – Công nghệ tiên phong, an toàn vững bước, kết nối mọi
+            hành trình!
           </p>
         </div>
       </div>
@@ -195,8 +196,8 @@ const News = () => {
 
         <p className="text-gray-700 mb-4">
           Từ những ngày đầu thành lập,{" "}
-          <span className="font-semibold text-green-700">GoTicket</span> đã định
-          hướng trở thành
+          <span className="font-semibold text-green-700">GoTicket Poly</span> đã
+          định hướng trở thành
           <span className="font-medium">
             {" "}
             thương hiệu vận tải hành khách hàng đầu Việt Nam
@@ -250,8 +251,8 @@ const News = () => {
           </li>
           <li>
             <span className="font-semibold text-green-700">Tận tâm:</span> Mỗi
-            nhân viên GoTicket đều là người đồng hành đáng tin cậy trên mọi hành
-            trình.
+            nhân viên GoTicket Poly đều là người đồng hành đáng tin cậy trên mọi
+            hành trình.
           </li>
           <li>
             <span className="font-semibold text-green-700">
@@ -265,8 +266,8 @@ const News = () => {
           🚀 Định hướng phát triển
         </h3>
         <p className="text-gray-700 mb-4">
-          Trong thời gian tới, GoTicket sẽ mở rộng mạng lưới tuyến xe khắp các
-          tỉnh thành, đa dạng hóa dịch vụ vận tải (xe giường nằm cao cấp, xe
+          Trong thời gian tới, GoTicket Poly sẽ mở rộng mạng lưới tuyến xe khắp
+          các tỉnh thành, đa dạng hóa dịch vụ vận tải (xe giường nằm cao cấp, xe
           trung chuyển, xe hợp đồng doanh nghiệp) và phát triển hệ thống{" "}
           <span className="font-medium">GoTicket App</span> – ứng dụng di động
           thông minh giúp người dùng quản lý, đặt vé và đánh giá hành trình
@@ -283,7 +284,7 @@ const News = () => {
 
         <div className="pt-6 mt-6 text-center">
           <p className="text-lg font-semibold text-green-700 mb-2">
-            GoTicket – Hành trình kết nối niềm tin, vững bước tương lai!
+            GoTicket Poly – Hành trình kết nối niềm tin, vững bước tương lai!
           </p>
         </div>
       </div>

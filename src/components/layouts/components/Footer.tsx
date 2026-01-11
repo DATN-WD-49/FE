@@ -32,8 +32,7 @@ const Footer = () => {
                 <span className="text-yellow-400 mr-2">
                   <PushpinOutlined />
                 </span>
-                Khách sạn Thân Hoa, đường Mai Thúc Loan, phường Nghi Hương, TP.
-                Vinh, Nghệ An.
+                13 Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội
               </p>
               <p>
                 <span className="text-yellow-400 mr-2">
@@ -101,22 +100,12 @@ const Footer = () => {
               <ul className="space-y-2">
                 <li>
                   <a href="#" className="hover:text-yellow-400">
-                    Hệ thống văn phòng
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-yellow-400">
                     Chính sách bảo mật
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:text-yellow-400">
                     Điều khoản
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-yellow-400">
-                    Liên hệ
                   </a>
                 </li>
               </ul>

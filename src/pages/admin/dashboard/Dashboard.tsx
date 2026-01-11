@@ -10,8 +10,7 @@ import {
   DollarOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
-import Line from "@ant-design/plots/es/line";
-import Column from "@ant-design/plots/es/column";
+import { Line, Column } from "@ant-design/plots";
 
 const { RangePicker } = DatePicker;
 
