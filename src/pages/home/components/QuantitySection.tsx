@@ -8,11 +8,11 @@ const QuantitySection = () => {
             CAM KẾT CHẤT LƯỢNG
           </h2>
           <p className="text-lg font-semibold mb-4 text-gray-800">
-            VỚI BỘ TIÊU CHUẨN CỦA NHÀ XE VĂN MINH
+            VỚI BỘ TIÊU CHUẨN CỦA NHÀ XE GOTICKET POLY
           </p>
           <p className="text-gray-700 max-w-3xl mx-auto mb-12">
-            Văn Minh cam kết chất lượng và tiêu chuẩn đối với khách hàng, đảm
-            bảo quyền lợi và sự chu đáo, tận tâm đối với khách hàng.
+            Goticket Poly cam kết chất lượng và tiêu chuẩn đối với khách hàng,
+            đảm bảo quyền lợi và sự chu đáo, tận tâm đối với khách hàng.
           </p>
 
           {/* <!-- 4 cột cam kết --> */}
