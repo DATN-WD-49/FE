@@ -8,11 +8,7 @@ const Footer = () => {
           <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-8 text-lg">
             {/* Cột 1 */}
             <div className="col-span-2 flex flex-col items-center space-y-6">
-              <img
-                src="https://gotickets.events/wp-content/uploads/2022/12/logo-gotickets.png"
-                alt="Logo"
-                className="w-62 invert"
-              />
+              {/* <img src="public/logo.png" alt="Logo" className="w-62 invert" /> */}
               <div className="flex space-x-6">
                 <a href="#" className="text-white hover:text-blue-500 text-3xl">
                   <i className="fa-brands fa-facebook"></i>
