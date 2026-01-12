@@ -12,6 +12,7 @@ import {
   Form,
   Switch,
   DatePicker,
+  notification,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
@@ -74,7 +75,17 @@ const UserManagement = () => {
 
   const { mutate: handleCreate, isPending: isCreating } = useMutation({
     mutationFn: (values: any) => {
-      return createUser(values);
+      const payload = {
+        userName: values.userName,
+        username: values.userName,
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.password,
+        phone: values.phone,
+        phoneNumber: values.phone,
+        role: values.role,
+      };
+      return createUser(payload);
     },
     onSuccess: () => {
       message.success("Thêm người dùng thành công!");
@@ -83,7 +94,14 @@ const UserManagement = () => {
       addForm.resetFields();
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.message || "Lỗi khi thêm mới.");
+      const errorMsg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Lỗi khi thêm mới. Vui lòng kiểm tra lại.";
+      notification.error({
+        message: "Thêm thất bại",
+        description: errorMsg,
+      });
     },
   });
 

@@ -19,7 +19,17 @@ export const getAllUser = async (
 };
 
 export const createUser = async (payload: any): Promise<IResponse<IUser>> => {
-  const { data } = await api.post(prefix, payload);
+  const submitData = {
+    userName: payload.userName || payload.username,
+    username: payload.userName || payload.username,
+    email: payload.email,
+    password: payload.password,
+    confirmPassword: payload.password,
+    phone: payload.phone || payload.phoneNumber,
+    phoneNumber: payload.phone || payload.phoneNumber,
+    role: payload.role,
+  };
+  const { data } = await api.post(prefix, submitData);
   return data;
 };
 
@@ -30,14 +40,17 @@ export const updateUser = async (
   const { data } = await api.patch(`/user/update/${userId}`, payload);
   return data;
 };
+
 export const getAllUsers = async (params?: any) => {
   const { data } = await api.get(`/user`, { params });
   return data;
 };
+
 export const updateUserRole = async (userId: string, role: UserRole) => {
   const { data } = await api.patch(`/user/${userId}/role`, { role });
   return data;
 };
+
 export const toggleLockUser = async (userId: string, isLocked: boolean) => {
   const { data } = await api.patch(`${prefix}/${userId}/lock`, { isLocked });
   return data;
