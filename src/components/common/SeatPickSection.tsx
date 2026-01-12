@@ -120,8 +120,8 @@ const SeatPickSection = ({
         </div>
         <div className="mt-6">
           <p className="italic font-thin">
-            Để được giải đáp thắc mắc về dịch vụ của công ty Văn Minh, quý khách
-            vui lòng liên hệ{" "}
+            Để được giải đáp thắc mắc về dịch vụ của công ty Goticket Poly, quý
+            khách vui lòng liên hệ{" "}
             <span className="text-red-500 font-medium">1900 6467</span>
           </p>
           <p className="mt-2 italic font-thin">

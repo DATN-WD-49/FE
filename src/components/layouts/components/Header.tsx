@@ -7,7 +7,7 @@ const Header = ({ isAuthPage = false }: { isAuthPage?: boolean }) => {
       <div className="max-w-[1280px] mx-6  xl:mx-auto flex justify-between items-center">
         <div className="my-4">
           <Link to={"/"}>
-            <img className="w-52" src="public/logo.jpg" alt="" />
+            <img className="w-60" src="public/logo.jpg" alt="" />
           </Link>
         </div>
         {!isAuthPage && <AuthHeader />}
