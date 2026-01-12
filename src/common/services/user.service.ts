@@ -18,6 +18,11 @@ export const getAllUser = async (
   return data;
 };
 
+export const createUser = async (payload: any): Promise<IResponse<IUser>> => {
+  const { data } = await api.post(prefix, payload);
+  return data;
+};
+
 export const updateUser = async (
   userId: string,
   payload: Partial<IUser>,

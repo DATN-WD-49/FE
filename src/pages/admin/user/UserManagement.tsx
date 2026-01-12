@@ -14,9 +14,18 @@ import {
   DatePicker,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { UserOutlined, SearchOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  SearchOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getAllUser, updateUser } from "../../../common/services/user.service";
+import {
+  getAllUser,
+  updateUser,
+  createUser,
+} from "../../../common/services/user.service";
 import type { IUser } from "../../../common/types/User";
 import dayjs from "dayjs";
 
@@ -29,8 +38,9 @@ const UserManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [isLocked, setIsLocked] = useState(false);
-
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const [addForm] = Form.useForm();
   const queryClient = useQueryClient();
 
   const { data: userResponse, isLoading } = useQuery({
@@ -43,14 +53,12 @@ const UserManagement = () => {
   const { mutate: handleUpdate, isPending: isUpdating } = useMutation({
     mutationFn: (values: any) => {
       if (!editingUser) return Promise.reject("No user selected");
-
       const updateData = {
         role: values.role,
         status: values.isLocked ? "locked" : "active",
         lockUntil:
           values.isLocked && values.lockUntil ? values.lockUntil : null,
       };
-
       return updateUser(editingUser._id, updateData);
     },
     onSuccess: () => {
@@ -64,24 +72,43 @@ const UserManagement = () => {
     },
   });
 
+  const { mutate: handleCreate, isPending: isCreating } = useMutation({
+    mutationFn: (values: any) => {
+      return createUser(values);
+    },
+    onSuccess: () => {
+      message.success("Thêm người dùng thành công!");
+      queryClient.invalidateQueries({ queryKey: ["USERS"] });
+      setIsAddModalOpen(false);
+      addForm.resetFields();
+    },
+    onError: (error: any) => {
+      message.error(error?.response?.data?.message || "Lỗi khi thêm mới.");
+    },
+  });
+
   const onEdit = (user: IUser) => {
     setEditingUser(user);
     const userIsLocked = user.status === "locked";
     setIsLocked(userIsLocked);
-
     form.setFieldsValue({
       role: user.role,
       email: user.email,
       isLocked: userIsLocked,
       lockUntil: user.lockUntil ? dayjs(user.lockUntil) : null,
     });
-
     setIsModalOpen(true);
   };
 
   const onSave = () => {
     form.validateFields().then((values) => {
       handleUpdate(values);
+    });
+  };
+
+  const onAddUser = () => {
+    addForm.validateFields().then((values) => {
+      handleCreate(values);
     });
   };
 
@@ -137,7 +164,6 @@ const UserManagement = () => {
       key: "status",
       render: (_, record) => {
         if (record.status === "locked") return <Tag color="error">Đã khóa</Tag>;
-
         return record.isVerifed ? (
           <Tag color="success">Đã xác thực</Tag>
         ) : (
@@ -202,8 +228,19 @@ const UserManagement = () => {
           <Title level={3} style={{ margin: 0, color: "#0C7D41" }}>
             Quản lý người dùng
           </Title>
-          <div className="bg-green-50 text-green-700 px-4 py-2 rounded-md font-medium">
-            Tổng số: {filteredData.length} User
+          <div className="flex items-center gap-3">
+            <div className="bg-green-50 text-green-700 px-4 py-2 rounded-md font-medium">
+              Tổng số: {filteredData.length} User
+            </div>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              style={{ backgroundColor: "#0C7D41" }}
+              size="large"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              Thêm mới
+            </Button>
           </div>
         </div>
 
@@ -304,6 +341,78 @@ const UserManagement = () => {
                 </Form.Item>
               )}
             </div>
+          </Form>
+        </Modal>
+
+        <Modal
+          title="Thêm người dùng mới"
+          open={isAddModalOpen}
+          onCancel={() => setIsAddModalOpen(false)}
+          onOk={onAddUser}
+          confirmLoading={isCreating}
+          okText="Thêm mới"
+          cancelText="Hủy"
+        >
+          <Form
+            form={addForm}
+            layout="vertical"
+            className="mt-4"
+            initialValues={{ role: "staff" }}
+          >
+            <Form.Item
+              name="userName"
+              label="Tên người dùng"
+              rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+            >
+              <Input placeholder="Nhập tên hiển thị" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[
+                { required: true, message: "Vui lòng nhập email!" },
+                { type: "email", message: "Email không hợp lệ!" },
+              ]}
+            >
+              <Input placeholder="Nhập địa chỉ email" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="password"
+              label="Mật khẩu"
+              rules={[
+                { required: true, message: "Vui lòng nhập mật khẩu!" },
+                { min: 6, message: "Mật khẩu phải từ 6 ký tự!" },
+              ]}
+            >
+              <Input.Password placeholder="Nhập mật khẩu" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="phone"
+              label="Số điện thoại"
+              rules={[
+                { required: true, message: "Vui lòng nhập số điện thoại!" },
+                {
+                  pattern: /^[0-9]{10,11}$/,
+                  message: "Số điện thoại không hợp lệ (10-11 số)!",
+                },
+              ]}
+            >
+              <Input placeholder="Nhập số điện thoại" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="role"
+              label="Vai trò (Quyền hạn)"
+              rules={[{ required: true, message: "Vui lòng chọn quyền!" }]}
+            >
+              <Select size="large">
+                <Select.Option value="staff">Staff (Nhân viên)</Select.Option>
+                <Select.Option value="user">User (Khách hàng)</Select.Option>
+              </Select>
+            </Form.Item>
           </Form>
         </Modal>
       </div>
