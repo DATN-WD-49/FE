@@ -8,7 +8,11 @@ const Footer = () => {
           <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-8 text-lg">
             {/* Cột 1 */}
             <div className="col-span-2 flex flex-col items-center space-y-6">
-              {/* <img src="public/logo.png" alt="Logo" className="w-62 invert" /> */}
+              {/* <img
+                src="public/z7421011617293_bc61ddf521b3dea7bfc19e427cf2895e.jpg"
+                alt="Logo"
+                className="w-62 invert"
+              /> */}
               <div className="flex space-x-6">
                 <a href="#" className="text-white hover:text-blue-500 text-3xl">
                   <i className="fa-brands fa-facebook"></i>
@@ -79,7 +83,7 @@ const Footer = () => {
             {/* <!-- Cột 4 --> */}
             <div className="col-span-2">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.011726812385!2d105.6935!3d18.6796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139cfd26e6c6b6b%3A0xa648cfb9cdbcdaad!2zQ8O0bmcgVHkgVE5ISC BWw6FuIE1pbmg!5e0!3m2!1svi!2s!4v1672500000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.867126739384!2d105.732505!3d21.038132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134557b7c2f89a7%3A0x28d1f8e0e93f3d1a!2zQ8O0bmcgZMOibmcgRlBUIFBvbHl0ZWNobmljIEjDoCBO4buZaQ!5e0!3m2!1svi!2s!4v1736500000000"
                 width="100%"
                 height={250}
                 style={{ border: 0 }}
@@ -91,17 +95,30 @@ const Footer = () => {
             </div>
 
             {/* <!-- Cột 5 --> */}
-            <div className="col-span-2 space-y-4">
+            <div className="col-span-2 space-y-4 text-white">
               <h2 className="font-bold text-2xl">Liên kết nhanh</h2>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-white">
                 <li>
-                  <a href="#" className="hover:text-yellow-400">
+                  <a
+                    href="/privacy-policy"
+                    className="text-white hover:!text-yellow-400"
+                  >
                     Chính sách bảo mật
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-yellow-400">
+                  <a href="#" className="text-white hover:!text-yellow-400">
+                    Địa chỉ văn phòng
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:!text-yellow-400">
                     Điều khoản
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:!text-yellow-400">
+                    Liên Hệ
                   </a>
                 </li>
               </ul>
