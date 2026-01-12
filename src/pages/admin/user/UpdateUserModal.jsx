@@ -15,7 +15,7 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
         email: currentUser.email,
         role: currentUser.role,
         is_locked: isUserLocked,
-        lock_until: currentUser.lockUntil ? moment(currentUser.lockUntil) : null,
+        expiredBanned: currentUser.lockUntil ? moment(currentUser.lockUntil) : null,
       });
     }
   }, [currentUser, form]);
@@ -28,8 +28,8 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
     const updatedData = {
       ...currentUser,
       role: values.role,
-      status: values.is_locked ? 'locked' : 'active',
-      lockUntil: values.is_locked ? values.lock_until : null,
+      isLocked: values.isLocked ? 'true' : 'false',
+      expiredBanned: values.isLocked ? values.expiredBanned : null,
     };
     
     onUpdate(updatedData);
@@ -73,7 +73,7 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
           {isLocked && (
             <Form.Item 
               label="Khóa đến khi nào thì mở lại?" 
-              name="lock_until"
+              name="expiredBanned"
               rules={[{ required: true, message: 'Vui lòng chọn thời gian mở khóa!' }]}
               extra="Sau thời gian này, tài khoản sẽ tự động được mở."
             >
