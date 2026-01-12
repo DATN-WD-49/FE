@@ -1,5 +1,5 @@
 export interface IUser {
-  lockUntil?: string;
+  expiredBanned?: string;
   _id: string;
   userName: string;
   avatar: string;

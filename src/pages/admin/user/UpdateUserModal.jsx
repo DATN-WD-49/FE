@@ -14,7 +14,7 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
       form.setFieldsValue({
         email: currentUser.email,
         role: currentUser.role,
-        is_locked: isUserLocked,
+        islocked: isUserLocked,
         expiredBanned: currentUser.lockUntil ? moment(currentUser.lockUntil) : null,
       });
     }

@@ -56,9 +56,9 @@ const UserManagement = () => {
       if (!editingUser) return Promise.reject("No user selected");
       const updateData = {
         role: values.role,
-        status: values.isLocked ? "locked" : "active",
-        lockUntil:
-          values.isLocked && values.lockUntil ? values.lockUntil : null,
+        isLocked: values.isLocked ? true : false,
+        expiredBanned:
+          values.isLocked && values.expiredBanned ? values.expiredBanned : null,
       };
       return updateUser(editingUser._id, updateData);
     },
@@ -113,7 +113,7 @@ const UserManagement = () => {
       role: user.role,
       email: user.email,
       isLocked: userIsLocked,
-      lockUntil: user.lockUntil ? dayjs(user.lockUntil) : null,
+      expiredBanned: user.isLocked ? dayjs(user.expiredBanned) : null,
     });
     setIsModalOpen(true);
   };
@@ -345,7 +345,7 @@ const UserManagement = () => {
 
               {isLocked && (
                 <Form.Item
-                  name="lockUntil"
+                  name="expiredBanned"
                   label="Thời hạn khóa (Tùy chọn)"
                   help="Để trống = Khóa vĩnh viễn (cho đến khi mở lại thủ công)."
                 >
