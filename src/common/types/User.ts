@@ -1,18 +1,21 @@
+export type UserRole = "user" | "staff" | "admin";
+
 export interface IUser {
-  lockUntil?: string;
   _id: string;
   userName: string;
-  avatar: string;
   email: string;
-  phone: string;
-  isVerifed: boolean;
-  role: string;
-  isLocked: boolean;
-  createdAt: string;
+  phone?: string;
+  avatar?: string;
+  password?: string;
+  role: UserRole;
+  provider?: string[];
+  googleId?: string;
   isVerified: boolean;
-  provider: string[];
-  updatedAt: string;
+  isLocked: boolean;
+  expiredBanned?: string;
+  verifyToken?: string;
+  createdAt?: string;
+  updatedAt?: string;
   status?: string;
   accountType?: string;
 }
-export type UserRole = "user" | "staff" | "admin";

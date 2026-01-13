@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Select, Switch, DatePicker, Button, Input, message } from 'antd';
-import moment from 'moment';
+import { Modal, Form, Select, Switch, DatePicker, Button, Input } from 'antd';
+import dayjs from 'dayjs';
 
 const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
   const [form] = Form.useForm();
@@ -8,14 +8,14 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
 
   useEffect(() => {
     if (currentUser) {
-      const isUserLocked = currentUser.status === 'locked';
-      setIsLocked(isUserLocked);
+      const userIsLocked = currentUser.isLocked || false;
+      setIsLocked(userIsLocked);
 
       form.setFieldsValue({
         email: currentUser.email,
         role: currentUser.role,
-        is_locked: isUserLocked,
-        lock_until: currentUser.lockUntil ? moment(currentUser.lockUntil) : null,
+        isLocked: userIsLocked,
+        expiredBanned: currentUser.expiredBanned ? dayjs(currentUser.expiredBanned) : null,
       });
     }
   }, [currentUser, form]);
@@ -25,16 +25,14 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
   };
 
   const handleFinish = (values) => {
-    const updatedData = {
-      ...currentUser,
+    const submitData = {
+      ...values,
       role: values.role,
-      status: values.is_locked ? 'locked' : 'active',
-      lockUntil: values.is_locked ? values.lock_until : null,
+      isLocked: values.isLocked,
+      expiredBanned: values.isLocked && values.expiredBanned ? values.expiredBanned : null,
     };
     
-    onUpdate(updatedData);
-    message.success("Cập nhật thành công!");
-    onClose();
+    onUpdate(submitData);
   };
 
   return (
@@ -46,7 +44,7 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
     >
       <Form form={form} layout="vertical" onFinish={handleFinish}>
         <Form.Item label="Người dùng" name="email">
-          <Input disabled className="bg-gray-100" />
+          <Input disabled className="bg-gray-100 text-gray-500" />
         </Form.Item>
 
         <Form.Item 
@@ -55,16 +53,17 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
           rules={[{ required: true, message: 'Vui lòng chọn quyền!' }]}
         >
           <Select placeholder="Chọn quyền">
-            <Select.Option value="STAFF">Staff (Nhân viên)</Select.Option>
-            <Select.Option value="USER">User (Người dùng)</Select.Option>
+            <Select.Option value="staff">Staff (Nhân viên)</Select.Option>
+            <Select.Option value="user">User (Người dùng)</Select.Option>
+            <Select.Option value="admin">Admin (Quản trị)</Select.Option>
           </Select>
         </Form.Item>
 
         <div className="border-t my-4 pt-4">
           <h4 className="mb-2 font-semibold">Trạng thái tài khoản</h4>
           
-          <Form.Item name="is_locked" valuePropName="checked">
-            <div className="flex items-center justify-between">
+          <Form.Item name="isLocked" valuePropName="checked">
+            <div className="flex items-center justify-between border p-3 rounded bg-gray-50">
               <span>Khóa tài khoản này?</span>
               <Switch onChange={handleSwitchChange} />
             </div>
@@ -73,9 +72,8 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
           {isLocked && (
             <Form.Item 
               label="Khóa đến khi nào thì mở lại?" 
-              name="lock_until"
-              rules={[{ required: true, message: 'Vui lòng chọn thời gian mở khóa!' }]}
-              extra="Sau thời gian này, tài khoản sẽ tự động được mở."
+              name="expiredBanned"
+              help="Để trống = Khóa vĩnh viễn (cho đến khi mở lại thủ công)."
             >
               <DatePicker 
                 showTime 
@@ -89,7 +87,7 @@ const UpdateUserModal = ({ isVisible, onClose, currentUser, onUpdate }) => {
 
         <div className="flex justify-end gap-2 mt-4">
           <Button onClick={onClose}>Hủy</Button>
-          <Button type="primary" htmlType="submit" className="bg-blue-600">
+          <Button type="primary" htmlType="submit" style={{ backgroundColor: "#0C7D41" }}>
             Lưu thay đổi
           </Button>
         </div>

@@ -3,8 +3,9 @@ import {
   ClockCircleFilled,
   EnvironmentOutlined,
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import SeatPickSection from "./SeatPickSection";
 import type { ISchedule } from "../../common/types/Schedule";
 import { getSocket } from "../../socket/socket-client";
@@ -25,17 +26,20 @@ const ScheduleCard = ({
   openScheduleId: string | null;
   setOpenScheduleId: (id: string | null) => void;
 }) => {
+  const navigate = useNavigate(); // 3. Khởi tạo navigate
   const resetInfomationCheckout = useCheckoutSelector(
     (state) => state.resetInformation,
   );
   const isOpenSeatMap = openScheduleId === schedule._id;
   const socket = getSocket();
   const queryClient = useQueryClient();
+
   const handleSeatUpdate = () => {
     queryClient.invalidateQueries({
       predicate: ({ queryKey }) => queryKey.includes(QUERY_KEY.SEAT.ROOT),
     });
   };
+
   const { mutate } = useMutation({
     mutationFn: async () => {
       return await unHoldSeat();
@@ -46,31 +50,50 @@ const ScheduleCard = ({
       });
     },
   });
+
   const handleOpenSchedule = (scheduleId: string) => {
+    // --- 4. LOGIC MỚI: KIỂM TRA ĐĂNG NHẬP ---
+    // Nếu không có socket (tức là chưa đăng nhập)
+    if (!socket) {
+      message.warning("Bạn cần đăng nhập để chọn chỗ!"); // Hiện thông báo
+      navigate("/auth/login"); // Chuyển sang trang Login
+      return; // Dừng lại không làm gì tiếp theo
+    }
+
     if (isOpenSeatMap) {
       resetInfomationCheckout();
       mutate();
-      socket.emit("leaveSchedule", scheduleId);
+      socket?.emit("leaveSchedule", scheduleId);
       setOpenScheduleId(null);
       return;
     }
     resetInfomationCheckout();
     mutate();
-    socket.emit("joinSchedule", scheduleId);
+    socket?.emit("joinSchedule", scheduleId);
     setOpenScheduleId(scheduleId);
   };
+
   useEffect(() => {
+    if (!socket || typeof socket.on !== "function") return;
+
     socket.on("seatUpdated", handleSeatUpdate);
+
     return () => {
-      socket.emit("leaveSchedule", schedule._id);
-      socket.off("seatUpdated", handleSeatUpdate);
+      if (socket) {
+        socket.emit("leaveSchedule", schedule._id);
+        socket.off("seatUpdated", handleSeatUpdate);
+      }
     };
   }, [queryClient, schedule._id, socket]);
+
   return (
     <div className="w-full">
       <div
-        className={`${isOpenSeatMap ? "bg-blue-100 border-blue-300" : "bg-white border-gray-100"} w-full shadow-md rounded-md border 0 flex justify-around
-     py-8 px-4`}
+        className={`${
+          isOpenSeatMap
+            ? "bg-blue-100 border-blue-300"
+            : "bg-white border-gray-100"
+        } w-full shadow-md rounded-md border 0 flex justify-around py-8 px-4`}
       >
         <div className="flex gap-2 flex-col items-start">
           <p className="flex items-center gap-3 ">

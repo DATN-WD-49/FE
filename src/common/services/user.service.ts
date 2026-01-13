@@ -19,7 +19,14 @@ export const getAllUser = async (
 };
 
 export const createUser = async (payload: any): Promise<IResponse<IUser>> => {
-  const { data } = await api.post(prefix, payload);
+  const submitData = {
+    userName: payload.userName,
+    email: payload.email,
+    password: payload.password,
+    phone: payload.phone,
+    role: payload.role || "user",
+  };
+  const { data } = await api.post(prefix, submitData);
   return data;
 };
 

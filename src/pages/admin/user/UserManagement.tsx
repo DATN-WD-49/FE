@@ -12,6 +12,7 @@ import {
   Form,
   Switch,
   DatePicker,
+  notification,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
@@ -28,6 +29,7 @@ import {
 } from "../../../common/services/user.service";
 import type { IUser } from "../../../common/types/User";
 import dayjs from "dayjs";
+import { createUser, getAllUser, updateUser } from "../../../common/services/user.service";
 
 const { Title } = Typography;
 
@@ -55,9 +57,9 @@ const UserManagement = () => {
       if (!editingUser) return Promise.reject("No user selected");
       const updateData = {
         role: values.role,
-        status: values.isLocked ? "locked" : "active",
-        lockUntil:
-          values.isLocked && values.lockUntil ? values.lockUntil : null,
+        isLocked: values.isLocked,
+        expiredBanned:
+          values.isLocked && values.expiredBanned ? values.expiredBanned : null,
       };
       return updateUser(editingUser._id, updateData);
     },
@@ -74,7 +76,14 @@ const UserManagement = () => {
 
   const { mutate: handleCreate, isPending: isCreating } = useMutation({
     mutationFn: (values: any) => {
-      return createUser(values);
+      const payload = {
+        userName: values.userName,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+        role: values.role,
+      };
+      return createUser(payload);
     },
     onSuccess: () => {
       message.success("Thêm người dùng thành công!");
@@ -83,19 +92,26 @@ const UserManagement = () => {
       addForm.resetFields();
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.message || "Lỗi khi thêm mới.");
+      const errorMsg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Lỗi khi thêm mới. Vui lòng kiểm tra lại.";
+      notification.error({
+        message: "Thêm thất bại",
+        description: errorMsg,
+      });
     },
   });
 
   const onEdit = (user: IUser) => {
     setEditingUser(user);
-    const userIsLocked = user.status === "locked";
+    const userIsLocked = user.isLocked || false;
     setIsLocked(userIsLocked);
     form.setFieldsValue({
       role: user.role,
       email: user.email,
       isLocked: userIsLocked,
-      lockUntil: user.lockUntil ? dayjs(user.lockUntil) : null,
+      expiredBanned: user.expiredBanned ? dayjs(user.expiredBanned) : null,
     });
     setIsModalOpen(true);
   };
@@ -135,14 +151,14 @@ const UserManagement = () => {
     },
     {
       title: "Loại TK",
-      key: "accountType",
-      dataIndex: "accountType",
-      render: (type) => {
-        const isGoogle = (type || "").toLowerCase().includes("google");
+      key: "provider",
+      dataIndex: "provider",
+      render: (provider: string[]) => {
+        const isGoogle = provider?.includes("google");
         return isGoogle ? (
           <Tag color="orange">Google</Tag>
         ) : (
-          <Tag color="blue">Email</Tag>
+          <Tag color="blue">Local</Tag>
         );
       },
     },
@@ -163,9 +179,9 @@ const UserManagement = () => {
       title: "Trạng thái",
       key: "status",
       render: (_, record) => {
-        if (record.status === "locked") return <Tag color="error">Đã khóa</Tag>;
-        return record.isVerifed ? (
-          <Tag color="success">Đã xác thực</Tag>
+        if (record.isLocked) return <Tag color="error">Đã khóa</Tag>;
+        return record.isVerified ? (
+          <Tag color="success">Active</Tag>
         ) : (
           <Tag color="warning">Chưa xác thực</Tag>
         );
@@ -211,11 +227,11 @@ const UserManagement = () => {
 
     let matchStatus = true;
     if (statusFilter !== "ALL") {
-      if (statusFilter === "locked") matchStatus = u.status === "locked";
-      else if (statusFilter === "verified")
-        matchStatus = u.isVerifed === true && u.status !== "locked";
+      if (statusFilter === "locked") matchStatus = u.isLocked === true;
+      else if (statusFilter === "active")
+        matchStatus = u.isVerified === true && !u.isLocked; // <-- Đã sửa isVerifed
       else if (statusFilter === "unverified")
-        matchStatus = !u.isVerifed && u.status !== "locked";
+        matchStatus = !u.isVerified && !u.isLocked; // <-- Đã sửa isVerifed
     }
 
     return matchSearch && matchRole && matchStatus;
@@ -263,6 +279,7 @@ const UserManagement = () => {
               { value: "ALL", label: "Tất cả Quyền" },
               { value: "staff", label: "Staff" },
               { value: "user", label: "User" },
+              { value: "admin", label: "Admin" },
             ]}
           />
 
@@ -273,7 +290,7 @@ const UserManagement = () => {
             onChange={(val) => setStatusFilter(val)}
             options={[
               { value: "ALL", label: "Tất cả Trạng thái" },
-              { value: "verified", label: "Đã xác thực" },
+              { value: "active", label: "Active" },
               { value: "unverified", label: "Chưa xác thực" },
               { value: "locked", label: "Đã khóa" },
             ]}
@@ -288,6 +305,7 @@ const UserManagement = () => {
           pagination={{ pageSize: 10 }}
         />
 
+        {/* Modal Cập Nhật */}
         <Modal
           title="Cập nhật người dùng"
           open={isModalOpen}
@@ -298,7 +316,7 @@ const UserManagement = () => {
           cancelText="Hủy"
         >
           <Form form={form} layout="vertical" className="mt-4">
-            <Form.Item label="Người dùng" name="email">
+            <Form.Item label="Email" name="email">
               <Input disabled className="bg-gray-100 text-gray-500" />
             </Form.Item>
 
@@ -308,8 +326,8 @@ const UserManagement = () => {
               rules={[{ required: true, message: "Vui lòng chọn quyền!" }]}
             >
               <Select size="large">
-                <Select.Option value="user">User (Khách hàng)</Select.Option>
-                <Select.Option value="staff">Staff (Nhân viên)</Select.Option>
+                <Select.Option value="user">User</Select.Option>
+                <Select.Option value="staff">Staff</Select.Option>
               </Select>
             </Form.Item>
 
@@ -327,16 +345,16 @@ const UserManagement = () => {
 
               {isLocked && (
                 <Form.Item
-                  name="lockUntil"
+                  name="expiredBanned"
                   label="Thời hạn khóa (Tùy chọn)"
-                  help="Để trống = Khóa vĩnh viễn (cho đến khi mở lại thủ công)."
+                  help="Để trống = Khóa vĩnh viễn"
                 >
                   <DatePicker
                     className="w-full"
                     size="large"
                     showTime
                     format="DD/MM/YYYY HH:mm"
-                    placeholder="Chọn ngày tự động mở (hoặc để trống)"
+                    placeholder="Chọn ngày mở lại"
                   />
                 </Form.Item>
               )}
@@ -357,7 +375,7 @@ const UserManagement = () => {
             form={addForm}
             layout="vertical"
             className="mt-4"
-            initialValues={{ role: "staff" }}
+            initialValues={{ role: "user" }}
           >
             <Form.Item
               name="userName"
