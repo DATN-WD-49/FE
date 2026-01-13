@@ -17,6 +17,9 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import PaymentSuccess from "../pages/checkout/Checkoutsuccess";
 import PaymentFailed from "../pages/checkout/CheckoutFailed";
 import MyTicketPage from "../pages/my-ticket/MyTicketPage";
+import PrivacyPolicy from "../pages/privacy/PrivacyPolicy";
+import HistoryPage from "../pages/privacy/HistoryPage";
+import VisionMissionPage from "../pages/privacy/VisionMissionPage";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -46,6 +49,18 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "my-tickets",
         element: <MyTicketPage />,
+      },
+      {
+        path: "history",
+        element: <HistoryPage />,
+      },
+      {
+        path: "vision-mission",
+        element: <VisionMissionPage />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "news",

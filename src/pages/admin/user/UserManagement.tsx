@@ -22,6 +22,11 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getAllUser,
+  updateUser,
+  createUser,
+} from "../../../common/services/user.service";
 import type { IUser } from "../../../common/types/User";
 import dayjs from "dayjs";
 import { createUser, getAllUser, updateUser } from "../../../common/services/user.service";
@@ -357,7 +362,6 @@ const UserManagement = () => {
           </Form>
         </Modal>
 
-        {/* Modal Thêm Mới */}
         <Modal
           title="Thêm người dùng mới"
           open={isAddModalOpen}

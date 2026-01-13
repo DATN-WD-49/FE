@@ -54,7 +54,7 @@ const IntroduceSection = () => {
             <div className="slide-down grid grid-rows-2 gap-6">
               {/* <!-- Card 1 --> */}
               <a
-                href="/lich-su-hinh-thanh"
+                href="/history"
                 className="group relative block overflow-hidden rounded-md shadow-lg"
               >
                 <img
@@ -87,7 +87,7 @@ const IntroduceSection = () => {
 
               {/* <!-- Card 2 --> */}
               <a
-                href="/tam-nhin-su-menh"
+                href="/vision-mission"
                 className="group relative block overflow-hidden rounded-md shadow-lg"
               >
                 <img
