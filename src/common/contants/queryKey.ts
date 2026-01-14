@@ -24,5 +24,8 @@ export const QUERY_KEY = {
   STATS: {
     ROOT: "STATS",
     OVERVIEW: "OVERVIEW",
+    TICKET: "TICKET",
+    ROUTE: "ROUTE",
+    CAR: "CAR",
   },
 };

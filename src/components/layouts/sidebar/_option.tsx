@@ -23,10 +23,7 @@ export const menuGroups: IMenuItem[] = [
   {
     icon: <LineChartOutlined />,
     label: "Thống kê",
-    children: [
-      { label: "Tổng quan", route: "/admin/stats/overview" },
-      { label: "Thong kê vé", route: "/admin/stats/ticket" },
-    ],
+    route: "/admin/stats/overview",
   },
   {
     icon: <CarOutlined />,

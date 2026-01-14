@@ -25,7 +25,7 @@ const SideBar = () => {
         <div className="px-6 pt-4 pb-4 border-b border-gray-200">
           <div className="text-lg font-medium flex items-center gap-3">
             <Link
-              to={"/"}
+              to={"/admin"}
               className="text-[#0c7d41]! hover:opacity-80 font-bold"
             >
               GO TICKET
