@@ -29,7 +29,6 @@ import {
 } from "../../../common/services/user.service";
 import type { IUser } from "../../../common/types/User";
 import dayjs from "dayjs";
-import { createUser, getAllUser, updateUser } from "../../../common/services/user.service";
 
 const { Title } = Typography;
 

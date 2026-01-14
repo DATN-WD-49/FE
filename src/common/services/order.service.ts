@@ -32,7 +32,7 @@ export const getDetailOrder = async (
   return data;
 };
 export const verifyOrder = async (id: string) => {
-  const { data } = await api.patch(`${prefix}/verfiry/${id}`);
+  const { data } = await api.patch(`${prefix}/verify/${id}`);
   return data;
 };
 
