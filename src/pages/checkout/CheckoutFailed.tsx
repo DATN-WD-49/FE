@@ -45,12 +45,12 @@ const PaymentFailed: React.FC = () => {
 
         {/* Actions */}
         <div className="space-y-4">
-          <button
+          {/* <button
             onClick={() => (window.location.href = "/checkout")}
             className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 rounded-2xl text-lg transition"
           >
             🔁 Thanh toán lại
-          </button>
+          </button> */}
 
           <button
             onClick={() => (window.location.href = "/")}
