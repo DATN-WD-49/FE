@@ -21,4 +21,7 @@ export const QUERY_KEY = {
   ORDER: {
     ROOT: "ORDER",
   },
+  STATS: {
+    ROOT: "STATS",
+  },
 };

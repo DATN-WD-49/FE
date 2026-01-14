@@ -14,7 +14,7 @@ import { Line, Column } from "@ant-design/plots";
 
 const { RangePicker } = DatePicker;
 
-function Dashboard() {
+function DashboardTicket() {
   const ticketsData = [
     { date: "01/01", total: 30 },
     { date: "02/01", total: 45 },
@@ -61,7 +61,7 @@ function Dashboard() {
 
   return (
     <div style={{ padding: 24 }}>
-      <h2>📊 THỐNG KÊ HỆ THỐNG</h2>
+      <h2>📊 THỐNG KÊ VÉ HỆ THỐNG </h2>
       <Row gutter={16}>
         <Col span={4}>
           <StatCard title="Xe" value="12" icon={<CarOutlined />} />
@@ -142,4 +142,4 @@ function StatCard({
   );
 }
 
-export default Dashboard;
+export default DashboardTicket;
