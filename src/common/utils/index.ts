@@ -64,3 +64,9 @@ export const filterOption = (
   option: { value: string; label: string } | undefined,
 ) =>
   (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase());
+
+export const getGrowthTextColor = (value: number) => {
+  if (value > 0) return "text-green-500";
+  if (value === 0) return "text-yellow-500";
+  return "text-red-500";
+};

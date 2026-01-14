@@ -3,6 +3,7 @@ import {
   CalendarOutlined,
   CarOutlined,
   ClusterOutlined,
+  HomeOutlined,
   LineChartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -21,9 +22,17 @@ export type IMenuItem = {
 
 export const menuGroups: IMenuItem[] = [
   {
+    icon: <HomeOutlined />,
+    label: "DashBoard",
+    route: "/admin",
+  },
+  {
     icon: <LineChartOutlined />,
     label: "Thống kê",
-    route: "/admin/overview",
+    children: [
+      { label: "Tổng quan", route: "/admin/stats/overview" },
+      { label: "Thống kê vé", route: "/admin/stats/ticket" },
+    ],
   },
   {
     icon: <UserOutlined />,

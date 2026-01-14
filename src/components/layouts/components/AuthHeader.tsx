@@ -1,5 +1,4 @@
 import { useAuthSelector } from "../../../common/store";
-import { scrollToSection } from "../../../common/utils";
 import { Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -21,7 +20,9 @@ const AuthHeader = () => {
     login: state.login,
   }));
 
-  const handleBooking = () => scrollToSection("booking");
+  const handleBooking = () => {
+    nav("/", { state: { scrollTo: "booking" } });
+  };
   const nav = useNavigate();
   const handleLogin = () => {
     nav("/auth/login");

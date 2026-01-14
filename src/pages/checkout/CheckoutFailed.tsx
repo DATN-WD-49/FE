@@ -1,10 +1,10 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router";
 
 const PaymentFailed: React.FC = () => {
-  // 👉 Có thể lấy từ query param / API
-  const orderCode = "CSI6E6MY330";
   const reason = "Thanh toán không thành công hoặc đã bị huỷ";
-
+  const { id } = useParams();
+  const nav = useNavigate();
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center p-8">
       <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full p-12 text-center">
@@ -38,22 +38,15 @@ const PaymentFailed: React.FC = () => {
 
         {/* Order info */}
         <div className="bg-gray-50 rounded-2xl p-6 text-left space-y-4 mb-8 text-lg">
-          <InfoRow label="Mã đơn hàng" value={orderCode} />
+          <InfoRow label="Mã đơn hàng" value={id} />
           <InfoRow label="Lý do" value={reason} error />
           <InfoRow label="Trạng thái" value="Thất bại" error />
         </div>
 
         {/* Actions */}
         <div className="space-y-4">
-          {/* <button
-            onClick={() => (window.location.href = "/checkout")}
-            className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 rounded-2xl text-lg transition"
-          >
-            🔁 Thanh toán lại
-          </button> */}
-
           <button
-            onClick={() => (window.location.href = "/")}
+            onClick={() => nav("/")}
             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-4 rounded-2xl text-lg transition"
           >
             ⬅️ Về trang chủ

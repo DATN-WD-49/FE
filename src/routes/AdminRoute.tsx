@@ -15,7 +15,8 @@ import ListTicket from "../pages/admin/ticket/ListTicket.tsx";
 import ScanTicket from "../pages/admin/ticket/scan/ScanTicket.tsx";
 import DetailAdminTicket from "../pages/admin/ticket/detail/DetailAdminTicket.tsx";
 import UserManagement from "../pages/admin/user/UserManagement.tsx";
-import Dashboard from "../pages/admin/dashboard/Dashboard.tsx";
+import DashboardTicket from "../pages/admin/dashboard/ticket/statTicket.tsx";
+import DashboardOverview from "../pages/admin/dashboard/overview/Dashboard.tsx";
 
 export const AdminRoute: RouteObject[] = [
   {
@@ -31,8 +32,17 @@ export const AdminRoute: RouteObject[] = [
         element: <h1>helo</h1>,
       },
       {
-        path: "overview",
-        element: <Dashboard />,
+        path: "stats",
+        children: [
+          {
+            path: "overview",
+            element: <DashboardOverview />,
+          },
+          {
+            path: "ticket",
+            element: <DashboardTicket />,
+          },
+        ],
       },
       {
         path: "car",
