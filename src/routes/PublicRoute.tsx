@@ -133,7 +133,7 @@ export const PublicRoute: RouteObject[] = [
     element: <PaymentSuccess />,
   },
   {
-    path: "payment/failed/:id",
+    path: "payment/failed",
     element: <PaymentFailed />,
   },
 ];

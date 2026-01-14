@@ -67,7 +67,7 @@ const DetailAdminTicket = () => {
                     {data?.data.dropPoint}
                   </p>
                   <p>
-                    <span className="font-medium">Điểm trả:</span>{" "}
+                    <span className="font-medium">Ghế đã đặt:</span>{" "}
                     {data?.data.seats.map((item) => item.seatLabel).join(", ")}
                   </p>
                   <p>
@@ -126,9 +126,9 @@ const DetailAdminTicket = () => {
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="rounded-lg mt-4 bg-green-700 px-6 py-2 font-medium text-white hover:bg-blue-700 cursor-pointer">
+                  {/* <button className="rounded-lg mt-4 bg-green-700 px-6 py-2 font-medium text-white hover:bg-blue-700 cursor-pointer">
                     Xác nhận vé đã sử dụng
-                  </button>
+                  </button> */}
                   <button className="rounded-lg mt-4 bg-green-700 px-6 py-2 font-medium text-white hover:bg-blue-700 cursor-pointer">
                     In vé
                   </button>
