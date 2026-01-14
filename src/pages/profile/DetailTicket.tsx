@@ -104,7 +104,7 @@ const DetailTicket = () => {
                       {data?.data.dropPoint}
                     </p>
                     <p>
-                      <span className="font-medium">Điểm trả:</span>{" "}
+                      <span className="font-medium"> Ghế đã đặt:</span>{" "}
                       {data?.data.seats
                         .map((item) => item.seatLabel)
                         .join(", ")}
