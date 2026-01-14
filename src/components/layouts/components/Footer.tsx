@@ -107,17 +107,26 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:!text-yellow-400">
+                  <a
+                    href="/office"
+                    className="text-white hover:!text-yellow-400"
+                  >
                     Địa chỉ văn phòng
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:!text-yellow-400">
+                  <a
+                    href="/terms"
+                    className="text-white hover:!text-yellow-400"
+                  >
                     Điều khoản
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:!text-yellow-400">
+                  <a
+                    href="/contact"
+                    className="text-white hover:!text-yellow-400"
+                  >
                     Liên Hệ
                   </a>
                 </li>

@@ -20,6 +20,9 @@ import MyTicketPage from "../pages/my-ticket/MyTicketPage";
 import PrivacyPolicy from "../pages/privacy/PrivacyPolicy";
 import HistoryPage from "../pages/privacy/HistoryPage";
 import VisionMissionPage from "../pages/privacy/VisionMissionPage";
+import OfficeAddressPage from "../pages/privacy/OfficeAddress";
+import TermsAndConditionsPage from "../pages/privacy/TermsAndConditionsPage";
+import ContactPage from "../pages/privacy/Contact";
 
 export const PublicRoute: RouteObject[] = [
   {
@@ -53,6 +56,18 @@ export const PublicRoute: RouteObject[] = [
       {
         path: "history",
         element: <HistoryPage />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "terms",
+        element: <TermsAndConditionsPage />,
+      },
+      {
+        path: "office",
+        element: <OfficeAddressPage />,
       },
       {
         path: "vision-mission",
